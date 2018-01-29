@@ -1,11 +1,3 @@
-require "active_support/core_ext/module/delegation"
-require "logger"
-require "sentry-raven"
-require "newrelic_rpm"
-
-require "shift/circuit_breaker/circuit_logger"
-require "shift/circuit_breaker/circuit_monitor"
-
 module Shift
   #
   # === Overview
@@ -21,7 +13,7 @@ module Shift
   # ==== Examples Usage:
   #
   # class MyClass
-  #   CIRCUIT_BREAKER = Shift::CircuitBreaker.new(:an_identifier_for_the_circuit, error_threshold: 10, skip_duration: 1.minute, additional_exception_classes: [ Excon::Errors::SocketError, ...])
+  #   CIRCUIT_BREAKER = Shift::CircuitBreaker.new(:an_identifier_for_the_circuit, error_threshold: 10, skip_duration: 60, additional_exception_classes: [ Excon::Errors::SocketError ])
   #
   #   def do_something
   #     # Note: operation and fallback should implement the public method #call or wrapped in a Proc/Lambda (as in the example below).
@@ -35,13 +27,13 @@ module Shift
     attr_accessor :name, :error_threshold, :skip_duration, :exception_classes, :error_count, :last_error_time, :state, :logger, :monitor
 
     DEFAULT_EXCEPTION_CLASSES = [ 
-                                  # ::Rack::Timeout::RequestTimeoutError,
-                                  # ::Rack::Timeout::RequestTimeoutException,
-                                  # ::Net::OpenTimeout,
-                                  # ::Net::ReadTimeout,
-                                  # ::Faraday::TimeoutError,
-                                  # ::Excon::Error::Timeout,
-                                  # ::Timeout::Error
+                                  # Rack::Timeout::RequestTimeoutError,
+                                  # Rack::Timeout::RequestTimeoutException,
+                                  # Net::OpenTimeout,
+                                  # Net::ReadTimeout,
+                                  # Faraday::TimeoutError,
+                                  # Excon::Error::Timeout,
+                                  # Timeout::Error
                                 ]
 
     # Initializer creates an instance of the service
@@ -52,7 +44,7 @@ module Shift
     # @param [Array]   additional_exception_classes - Any additional exception classes to rescue along the DEFAULT_EXCEPTION_CLASSES
     # @param [Object]  logger            - service to handle error logging
     # @param [Object]  monitor           - service to monitor metric
-    def initialize(name, error_threshold:, skip_duration:, additional_exception_classes: [], logger: CircuitLogger.new, monitor: CircuitMonitor.new)
+    def initialize(name, error_threshold:, skip_duration:, additional_exception_classes: [], logger: Shift::CircuitLogger.new, monitor: Shift::CircuitMonitor.new)
       self.name               = name
       self.error_threshold    = error_threshold
       self.skip_duration      = skip_duration
@@ -119,6 +111,3 @@ module Shift
 
   end
 end
-
-
-
