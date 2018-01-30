@@ -27,13 +27,10 @@ module Shift
     attr_accessor :name, :error_threshold, :skip_duration, :exception_classes, :error_count, :last_error_time, :state, :logger, :monitor
 
     DEFAULT_EXCEPTION_CLASSES = [ 
-                                  # Rack::Timeout::RequestTimeoutError,
-                                  # Rack::Timeout::RequestTimeoutException,
-                                  # Net::OpenTimeout,
-                                  # Net::ReadTimeout,
-                                  # Faraday::TimeoutError,
-                                  # Excon::Error::Timeout,
-                                  # Timeout::Error
+                                  Net::OpenTimeout,
+                                  Net::ReadTimeout,
+                                  Faraday::TimeoutError,
+                                  Timeout::Error
                                 ]
 
     # Initializer creates an instance of the service
@@ -87,7 +84,7 @@ module Shift
         reset_state
         monitor.record_metric(name, state)
         response
-      rescue *exception_classes
+      rescue_from *exception_classes
         record_error
         monitor.record_metric(name, state)
         logger.error({ circuit_name: name, state: state, error_message: $!.message })
