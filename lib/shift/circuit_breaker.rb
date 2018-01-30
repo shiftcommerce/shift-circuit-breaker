@@ -84,7 +84,7 @@ module Shift
         reset_state
         monitor.record_metric(name, state)
         response
-      rescue_from *exception_classes
+      rescue *exception_classes
         record_error
         monitor.record_metric(name, state)
         logger.error({ circuit_name: name, state: state, error_message: $!.message })

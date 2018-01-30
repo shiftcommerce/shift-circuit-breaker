@@ -66,11 +66,3 @@ To release a new version, update the version number in `lib/shift/circuit_breake
 ``` 
 
 This will create a tag, push to GitHub and push your latest version to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-1. Fork it ( https://github.com/[my-github-username]/shift-circuit-breaker/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
