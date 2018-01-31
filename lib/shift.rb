@@ -8,8 +8,6 @@ require "timeout"
 
 require "shift"
 require "shift/circuit_breaker"
-require "shift/circuit_logger"
-require "shift/circuit_monitor"
 
 module Shift
 end

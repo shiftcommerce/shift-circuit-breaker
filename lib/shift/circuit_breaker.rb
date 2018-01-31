@@ -1,3 +1,6 @@
+require "shift/circuit_logger"
+require "shift/circuit_monitor"
+
 module Shift
   #
   # === Overview
