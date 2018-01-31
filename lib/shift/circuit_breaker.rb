@@ -5,9 +5,8 @@ module Shift
   #
   # === Overview
   #
-  # Implements a generic mechanism for detecting external service call timeouts 
-  # and reduces the time spent waiting for further requests that will most-likely 
-  # fail and cause request queueing. 
+  # Implements a generic mechanism for detecting external service call timeouts and reduces the 
+  # time spent waiting for further requests that will most-likely fail and cause request queueing. 
   #
   # Similar to a conventional circuit breaker, when a curcuit is closed it allows operations 
   # to flow through. When the error_threshold is exceeded (tripped), the circuit is then opened for 
@@ -16,7 +15,11 @@ module Shift
   # ==== Examples Usage:
   #
   # class MyClass
-  #   CIRCUIT_BREAKER = Shift::CircuitBreaker.new(:an_identifier_for_the_circuit, error_threshold: 10, skip_duration: 60, additional_exception_classes: [ Excon::Errors::SocketError ])
+  #   CIRCUIT_BREAKER = Shift::CircuitBreaker.new(:an_identifier_for_the_circuit, 
+  #                                               error_threshold: 10, 
+  #                                               skip_duration: 60, 
+  #                                               additional_exception_classes: [ Excon::Errors::SocketError ]
+  #                                             )
   #
   #   def do_something
   #     # Note: operation and fallback should implement the public method #call or wrapped in a Proc/Lambda (as in the example below).
