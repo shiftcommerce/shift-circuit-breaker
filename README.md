@@ -9,7 +9,7 @@ Similar to a conventional circuit breaker, when a circuit is closed it allows op
 Add this line to your application's Gemfile:
 
 ```
-  $ gem 'shift-circuit-breaker'
+  $ gem "shift-circuit-breaker"
 ```
 
 And then execute:
@@ -34,8 +34,7 @@ Example usage is as follows -
                                                 error_threshold: 10, 
                                                 skip_duration: 1.minute, 
                                                 additional_exception_classes: [ 
-                                                  ::Savon::HTTPError, 
-                                                  ...
+                                                  ::Savon::HTTPError
                                                 ]
                                               )
 

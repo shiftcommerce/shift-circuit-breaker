@@ -1,6 +1,14 @@
-.DS_Store
-/.bundle/
-/lib/**/*.bundle
-/tmp/*
-*.gem
+# Ignore gem file lock
 Gemfile.lock
+
+# Ignore bundler config.
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/tmp/*
+/log/*
+.idea
+.env
+
+# Ignore Mac files
+**.DS_Store
