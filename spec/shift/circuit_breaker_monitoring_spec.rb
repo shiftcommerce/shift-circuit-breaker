@@ -43,7 +43,7 @@ module Shift
           fallback_stub = instance_double("Fallback")
 
           allow(monitor_stub).to receive(:record_metric)
-          allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "some mundane message")
+          allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
           
           # Act
           cb = described_class.new(:test_circuit_breaker, error_threshold: 1, skip_duration: default_skip_duration, monitor: monitor_stub)
@@ -51,7 +51,7 @@ module Shift
           # Assert
           aggregate_failures do
             expect(monitor_stub).to receive(:record_metric)
-            expect(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "some mundane message")
+            expect(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
 
             operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
 
