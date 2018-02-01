@@ -1,8 +1,8 @@
 # Shift Circuit Breaker
 
-The Shift Circuit Breaker library implements a generic mechanism for detecting, monitoring and controlling external service calls that will most-likely fail (eg. timeout) and cause request queuing. 
+The Shift Circuit Breaker library implements a generic mechanism for detecting, monitoring and controlling external service calls that will most-likely fail at some point (e.g. timeout) and cause request queuing. Although a plethora of Ruby circuit breaker libraries exist, those that are frequently updated have a dependency on Redis for persistence. We required a solution that didn't depend on persisting to a shared data store, i.e. a library that stores counters in local memory. As a result, the Shift Circuit Breaker was born.
 
-Similar to a conventional circuit breaker, when a circuit is closed it allows operations to flow through. When the `error_threshold` is exceeded (tripped), the circuit is then opened for the defined `skip_duration`, ie. no operations are executed and the provided `fallback` is called.
+Similar to a conventional circuit breaker, when a circuit is closed it allows operations to flow through. When the number of sequential errors exceeds the `error_threshold`, the circuit is then opened for the defined `skip_duration` – no operations are executed and the provided `fallback` is called.
 
 ## Installation
 
@@ -46,22 +46,18 @@ Example usage is as follows -
   end
 ```
 
-Note: the `operation` and `fallback` should implement the public method `#call` or wrapped in a `Proc/Lambda`.
+***Note:***  the `operation` and `fallback` should implement the public method `#call` or wrapped in a `Proc/Lambda`.
 
-## Development
 
-After checking out the repository, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run 
+With regards to monitoring, integration with New Relic is included by default. Similarly, integration with Sentry for logging is included by default. To enable any of these features, please set the relevant configuration in an initializer as follows -
 
+```ruby
+  Shift::CircuitBreaker.configure do |config|
+    config.new_relic_license_key = ENV["NEW_RELIC_LICENSE_KEY"]
+    config.new_relic_app_name = ENV["NEW_RELIC_APP_NAME"]
+    config.sentry_dsn = ENV["SENTRY_DSN"]
+  end
 ```
-  $ bundle exec rake install
-``` 
 
-To release a new version, update the version number in `lib/shift/circuit_breaker/version.rb`, and then run 
-
-```
-  $ bundle exec rake release
-``` 
-
-This will create a tag, push to GitHub and push your latest version to [rubygems.org](https://rubygems.org).
+***Note:*** both integrations can be overriden when instantiating both the `Shift::CircuitMonitor` and `Shift::CircuitLogger` services.
