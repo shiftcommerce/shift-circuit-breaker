@@ -28,9 +28,11 @@ git checkout -b my-feature-branch
 Ensure that you can build the project and run specs successfully before starting.
 
 ```
-$ bundle install
+$ ./bin/setup
 $ bundle exec rspec
 ```
+
+Run `bin/console` for an interactive prompt that will allow you to experiment.
 
 #### Write Tests
 
