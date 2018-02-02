@@ -49,16 +49,9 @@ module Shift
         @config = Shift::CircuitBreaker::Config.instance.tap do |config| 
                     yield config if block_given?
                   end
+        @config.initialize_all
       end
-
     end
 
-  end
-end
-
-if sentry_dsn = Shift::CircuitBreaker.config.sentry_dsn
-  Raven.configure do |config|
-    config.dsn = sentry_dsn
-    config.environments = %w[ production ]
   end
 end
