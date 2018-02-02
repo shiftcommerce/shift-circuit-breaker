@@ -1,6 +1,8 @@
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+# coding: utf-8
 
-RSpec::Core::RakeTask.new(:spec)
+require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
 
-task default: :spec
+RSpec::Core::RakeTask.new
+
+task default: %w(spec)

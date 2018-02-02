@@ -49,14 +49,13 @@ Example usage is as follows -
 ***Note:***  the `operation` and `fallback` should implement the public method `#call` or wrapped in a `Proc/Lambda`.
 
 
-
 With regards to monitoring, integration with New Relic is included by default. Similarly, integration with Sentry for logging is included by default. To enable any of these features, please set the relevant configuration in an initializer as follows -
 
 ```ruby
   Shift::CircuitBreaker.configure do |config|
     config.new_relic_license_key = ENV["NEW_RELIC_LICENSE_KEY"]
-    config.new_relic_app_name = ENV["NEW_RELIC_APP_NAME"]
-    config.sentry_dsn = ENV["SENTRY_DSN"]
+    config.new_relic_app_name    = ENV["NEW_RELIC_APP_NAME"]
+    config.sentry_dsn            = ENV["SENTRY_DSN"]
   end
 ```
 
