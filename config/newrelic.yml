@@ -14,7 +14,7 @@ common: &default_settings
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
-  app_name: <%= ENV.fetch("NEW_RELIC_APP_NAME") { "Circuit Breaker" } %>
+  app_name: <%= ENV["NEW_RELIC_APP_NAME"] %>
 
   # Dynamically enable the agent based on whether the licence key is present
   agent_enabled: <%= ENV["NEW_RELIC_LICENSE_KEY"]&.presence %>
