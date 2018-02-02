@@ -8,7 +8,7 @@ require "sentry-raven"
 require "singleton"
 require "timeout"
 
-require "shift/circuit_breaker/adapters/base"
+require "shift/circuit_breaker/adapters/base_adapter"
 require "shift/circuit_breaker/adapters/sentry_adapter"
 require "shift/circuit_breaker/adapters/newrelic_adapter"
 require "shift/circuit_breaker/config"

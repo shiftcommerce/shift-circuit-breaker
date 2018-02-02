@@ -1,7 +1,7 @@
 module Shift
   module CircuitBreaker
     module Adapters
-      class SentryAdapter < Base
+      class SentryAdapter < BaseAdapter
 
         def self.call(message)
           ::Raven.capture_exception(message) if defined?(Raven)

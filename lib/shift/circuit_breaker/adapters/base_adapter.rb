@@ -1,7 +1,7 @@
 module Shift
   module CircuitBreaker
     module Adapters
-      class Base
+      class BaseAdapter
 
         def self.call(message)
           raise NotImplementedError

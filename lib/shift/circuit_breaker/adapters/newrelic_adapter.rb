@@ -1,7 +1,7 @@
 module Shift
   module CircuitBreaker
     module Adapters
-      class NewRelicAdapter < Base
+      class NewRelicAdapter < BaseAdapter
 
         def self.call(message)
           ::NewRelic::Agent.increment_metric(message) if defined?(::NewRelic::Agent)
