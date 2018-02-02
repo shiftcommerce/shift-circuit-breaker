@@ -23,6 +23,7 @@ module Shift
 
       def initialize_all
         configure_sentry
+        configure_newrelic
       end
 
       private 
@@ -33,6 +34,12 @@ module Shift
             config.dsn = sentry_dsn
             config.environments = sentry_environments if sentry_environments.present?
           end
+        end
+      end
+
+      def configure_newrelic
+        if new_relic_app_name.present? && new_relic_license_key.present?
+          require "newrelic_rpm"
         end
       end
 

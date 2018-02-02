@@ -19,7 +19,7 @@ module Shift
       #
       # @param [Object]  logger  - service to handle internal logging
       # @param [Object]  external_error_logger - external error logging service eg. Sentry
-      def initialize(logger: ::Logger.new(STDOUT), external_error_logger: Shift::CircuitBreaker::Adapters::Sentry)
+      def initialize(logger: ::Logger.new(STDOUT), external_error_logger: Shift::CircuitBreaker::Adapters::SentryAdapter)
         self.logger = logger
         self.external_error_logger = external_error_logger
       end

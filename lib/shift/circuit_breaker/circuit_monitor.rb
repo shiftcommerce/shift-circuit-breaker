@@ -8,7 +8,7 @@ module Shift
       #
       # @param [Object] monitor - service to handle monitoring
       # @param [Object] logger  - service to handle logging
-      def initialize(monitor: Shift::CircuitBreaker::Adapters::NewRelic, logger: Shift::CircuitBreaker::CircuitLogger.new)
+      def initialize(monitor: Shift::CircuitBreaker::Adapters::NewRelicAdapter, logger: Shift::CircuitBreaker::CircuitLogger.new)
         self.monitor = monitor
         self.logger = logger
       end
