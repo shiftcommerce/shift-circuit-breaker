@@ -1,6 +1,3 @@
-require "shift/circuit_breaker/circuit_logger"
-require "shift/circuit_breaker/circuit_monitor"
-
 module Shift
   module CircuitBreaker
     #
