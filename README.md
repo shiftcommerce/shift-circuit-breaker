@@ -1,4 +1,4 @@
-[ ![Codeship Status for shiftcommerce/shift-circuit-breaker](https://app.codeship.com/projects/76d6b9e0-ecaa-0135-f112-7a88d47e1dcf/status?branch=master)](https://app.codeship.com/projects/270371) [![Maintainability](https://api.codeclimate.com/v1/badges/7d52af723c1579961280/maintainability)](https://codeclimate.com/github/shiftcommerce/shift-circuit-breaker/maintainability)
+[ ![Codeship Status for shiftcommerce/shift-circuit-breaker](https://app.codeship.com/projects/76d6b9e0-ecaa-0135-f112-7a88d47e1dcf/status?branch=master)](https://app.codeship.com/projects/270371) [![Maintainability](https://api.codeclimate.com/v1/badges/7d52af723c1579961280/maintainability)](https://codeclimate.com/github/shiftcommerce/shift-circuit-breaker/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/7d52af723c1579961280/test_coverage)](https://codeclimate.com/github/shiftcommerce/shift-circuit-breaker/test_coverage)
 
 # Shift Circuit Breaker
 

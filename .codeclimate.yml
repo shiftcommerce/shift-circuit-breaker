@@ -1,7 +1,5 @@
 version: "2"
 plugins:
-  reek:
-    enabled: true
   rubocop:
     enabled: true
   duplication:
