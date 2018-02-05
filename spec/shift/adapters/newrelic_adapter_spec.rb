@@ -36,7 +36,7 @@ module Shift
             described_class.call(metric)
 
             # Assert
-            expect(::NewRelic::Agent).to have_received(:increment_metric).with(metric)
+            expect(::NewRelic::Agent).to have_received(:increment_metric).with(metric).once
           end
         end
 

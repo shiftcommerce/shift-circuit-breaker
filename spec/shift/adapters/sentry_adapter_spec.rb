@@ -34,7 +34,7 @@ module Shift
             described_class.call(message)
 
             # Assert
-            expect(::Raven).to have_received(:capture_exception).with(message)
+            expect(::Raven).to have_received(:capture_exception).with(message).once
           end
         end
 

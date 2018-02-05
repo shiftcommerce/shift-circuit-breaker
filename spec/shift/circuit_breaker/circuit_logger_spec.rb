@@ -7,11 +7,10 @@ module Shift
       context "#error" do
         it "logs the given error message" do
           # Arrange
+          context         = { circuit_name: :test_circuit_breaker, error_message: "timeout", state: :open }
+          error_message   = (described_class::ERROR_MESSAGE % context)
           logger_instance = ::Logger.new(STDOUT)
-          logger = described_class.new(logger: logger_instance)
-          exception = Timeout::Error.new
-          context  = { circuit_name: :test_circuit_breaker, error_message: exception.message, state: :open }
-          error_message = (described_class::ERROR_MESSAGE % context)
+          logger          = described_class.new(logger: logger_instance)
 
           allow(logger_instance).to receive(:error)
 
@@ -26,9 +25,9 @@ module Shift
       context "#info" do
         it "logs the given input" do
           # Arrange
+          message         = "some message"
           logger_instance = ::Logger.new(STDOUT)
-          logger = described_class.new(logger: logger_instance)
-          message = "some information to log"
+          logger          = described_class.new(logger: logger_instance)
 
           allow(logger_instance).to receive(:info)
 
