@@ -66,6 +66,9 @@ module Shift
         end
 
         context "when the error_threshold is exceeded and skip_duration has expired" do
+          
+          after { Timecop.return }
+
           it "closes the circuit and returns the operation result" do
             # Arrange
             operation_1_stub      = instance_double("Operation1")
@@ -79,7 +82,7 @@ module Shift
             allow(operation_3_stub).to receive(:perform_task).and_return(expected_result_stub)
 
             # Act & Assert
-            cb = described_class.new(:test_circuit_breaker, error_threshold: 1, skip_duration: 1)
+            cb = described_class.new(:test_circuit_breaker, error_threshold: 1, skip_duration: 10)
 
             # The first request should increment the error_count and result in the operation being performed
             # The operation will fail with Timeout::Error, resulting in the exception being caught and the 
@@ -103,13 +106,14 @@ module Shift
 
             # The third request is fired after the skip duration has expired. It should the allowed to execute,
             # ie. #call should be executed, and the expected operation result returned.
-            aggregate_failures do
-              sleep(1)  # Buy time - 1 second
-              operation_3_result = cb.call(operation: -> { operation_3_stub.perform_task }, fallback: -> { fallback_stub })
+            Timecop.travel(Time.now + 10.seconds) do
+              aggregate_failures do
+                operation_3_result = cb.call(operation: -> { operation_3_stub.perform_task }, fallback: -> { fallback_stub })
 
-              # Check Circuit Breaker state and result
-              expect(cb.state).to eq(:closed)
-              expect(operation_3_result).to eq(expected_result_stub)
+                # Check Circuit Breaker state and result
+                expect(cb.state).to eq(:closed)
+                expect(operation_3_result).to eq(expected_result_stub)
+              end
             end
           end
         end
