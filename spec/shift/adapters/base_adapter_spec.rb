@@ -7,7 +7,7 @@ module Shift
     module Adapters
       describe BaseAdapter do
         context "#call" do
-          it "does raises NotImplementedError" do
+          it "raises NotImplementedError" do
             # Arrange
             message = "some message"
 

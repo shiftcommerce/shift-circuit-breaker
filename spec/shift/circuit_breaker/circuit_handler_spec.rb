@@ -52,7 +52,7 @@ module Shift
       end
 
       context "Invalid Arguments" do
-        context "Invalid arguments when initialising service" do
+        context "when initialising service" do
           let(:default_error_threshold) { 10 }
           let(:default_skip_duration)   { 60 }
 
