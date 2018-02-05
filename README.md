@@ -36,7 +36,7 @@ Example usage is as follows -
                                                 error_threshold: 10, 
                                                 skip_duration: 1.minute, 
                                                 additional_exception_classes: [ 
-                                                  ::Savon::HTTPError
+                                                  ::Faraday::ClientError
                                                 ]
                                               )
 

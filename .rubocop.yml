@@ -100,12 +100,6 @@ Metrics/CyclomaticComplexity:
 Naming/HeredocDelimiterNaming:
   Enabled: false 
 
-Rails/ActionFilter:
-  Enabled: false
-
-Rails/Delegate:
-  Enabled: false
-
 Style/AccessorMethodName:
   Enabled: false
 
@@ -158,7 +152,6 @@ Style/DotPosition:
 
 Style/DoubleNegation:
   Enabled: false
-
 
 Style/EachWithObject:
   Enabled: false

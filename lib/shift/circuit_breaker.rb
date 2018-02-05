@@ -27,12 +27,12 @@ module Shift
   #   CIRCUIT_BREAKER = Shift::CircuitBreaker.new(:an_identifier_for_the_circuit,
   #                                               error_threshold: 10,
   #                                               skip_duration: 60,
-  #                                               additional_exception_classes: [ Excon::Errors::SocketError ]
+  #                                               additional_exception_classes: [Faraday::ClientError]
   #                                             )
   #
   #   def do_something
   #     # Note: operation and fallback should implement the public method #call or wrapped in a Proc/Lambda (as in the example below).
-  #     CIRCUIT_BREAKER.call(operation: -> { SomeService.new(name: 'test').perform_task }, fallback: -> { [ 1, 2, 3, 4, 5 ].sum })
+  #     CIRCUIT_BREAKER.call(operation: -> { SomeService.new(name: 'test').perform_task }, fallback: -> { [1, 2, 3, 4, 5].sum })
   #   end
   # end
   #
