@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 module Shift
   module CircuitBreaker
     describe CircuitMonitor do
-
       context "#record_metric" do
         it "logs the metric information" do
           # Arrange
@@ -15,7 +16,7 @@ module Shift
 
           allow(logger_instance).to receive(:info)
 
-          # Act 
+          # Act
           circuit_monitor.record_metric(circuit_breaker_name, circuit_breaker_state)
 
           # Assert
@@ -32,7 +33,7 @@ module Shift
 
           allow(metric_monitor).to receive(:call)
 
-          # Act 
+          # Act
           circuit_monitor.record_metric(circuit_breaker_name, circuit_breaker_state)
 
           # Assert
@@ -41,8 +42,7 @@ module Shift
             expect(metric_monitor).to have_received(:call).with(metric)
           end
         end
-      end 
-
+      end
     end
   end
 end

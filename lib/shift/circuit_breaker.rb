@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "active_support/core_ext/module/delegation"
 require "active_support/core_ext/object/blank"
 require "active_support/core_ext/string/inflections"
@@ -22,9 +24,9 @@ module Shift
   # ==== Example Usage:
   #
   # class MyClass
-  #   CIRCUIT_BREAKER = Shift::CircuitBreaker.new(:an_identifier_for_the_circuit, 
-  #                                               error_threshold: 10, 
-  #                                               skip_duration: 60, 
+  #   CIRCUIT_BREAKER = Shift::CircuitBreaker.new(:an_identifier_for_the_circuit,
+  #                                               error_threshold: 10,
+  #                                               skip_duration: 60,
   #                                               additional_exception_classes: [ Excon::Errors::SocketError ]
   #                                             )
   #
@@ -35,9 +37,7 @@ module Shift
   # end
   #
   module CircuitBreaker
-
     class << self
-
       def new(*args)
         Shift::CircuitBreaker::CircuitHandler.new(*args)
       end
@@ -47,12 +47,11 @@ module Shift
       end
 
       def configure
-        @config = Shift::CircuitBreaker::Config.instance.tap do |config| 
-                    yield config if block_given?
-                  end
+        @config = Shift::CircuitBreaker::Config.instance.tap do |config|
+          yield config if block_given?
+        end
         @config.initialize_all
       end
     end
-
   end
 end

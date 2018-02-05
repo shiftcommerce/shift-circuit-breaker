@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Shift
   module CircuitBreaker
     class CircuitMonitor
-
       attr_accessor :monitor, :logger
 
       # Initializer creates an instance of the service
@@ -13,7 +14,7 @@ module Shift
         self.logger = logger
       end
 
-      # @param [String] name - The circuit name 
+      # @param [String] name - The circuit name
       # @param [Symbol] state - The circuit state
       def record_metric(name, state)
         metric = formatted_metric(name, state)
@@ -21,12 +22,11 @@ module Shift
         logger.info("* #{metric} *")
       end
 
-      private 
+      private
 
       def formatted_metric(name, state)
         "Custom/#{name.to_s.classify}CircuitBreaker/#{state.to_s.classify}"
       end
-
     end
   end
 end

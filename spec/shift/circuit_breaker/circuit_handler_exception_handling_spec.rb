@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 module Shift
   module CircuitBreaker
     describe CircuitHandler do
-
       context "Exception Handling" do
         let(:default_error_threshold) { 10 }
         let(:default_skip_duration)   { 60 }
@@ -43,9 +44,9 @@ module Shift
             # First and second requests should increment the error_count and result in #call being executed
             # The operations will fail with Timeout::Error, resulting in the exception being raised and caught,
             # and the fallback being returned as the operation result
-            [ operation_1_stub, operation_2_stub ].each do |operation_stub|
+            [operation_1_stub, operation_2_stub].each do |operation_stub|
               aggregate_failures do
-                expect(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")     
+                expect(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
                 result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
                 # Check Circuit Breaker state and result
                 expect(cb.state).to eq(:closed)
@@ -53,12 +54,12 @@ module Shift
               end
             end
 
-            # Third request should exceed the error_threshold (set at 2) and open the circuit. This should result 
+            # Third request should exceed the error_threshold (set at 2) and open the circuit. This should result
             # in #call not being executed and the fallback being returned early.
             aggregate_failures do
               expect(operation_3_stub).not_to receive(:perform_task)
               operation_3_result = cb.call(operation: -> { operation_3_stub.perform_task }, fallback: -> { fallback_stub })
-               # Check Circuit Breaker state and result
+              # Check Circuit Breaker state and result
               expect(cb.state).to eq(:open)
               expect(operation_3_result).to eq(fallback_stub)
             end
@@ -66,7 +67,6 @@ module Shift
         end
 
         context "when the error_threshold is exceeded and skip_duration has expired" do
-          
           after { Timecop.return }
 
           it "closes the circuit and returns the operation result" do
@@ -85,16 +85,16 @@ module Shift
             cb = described_class.new(:test_circuit_breaker, error_threshold: 1, skip_duration: 10)
 
             # The first request should increment the error_count and result in the operation being performed
-            # The operation will fail with Timeout::Error, resulting in the exception being caught and the 
+            # The operation will fail with Timeout::Error, resulting in the exception being caught and the
             # fallback being returned as the operation result
             aggregate_failures do
               operation_1_result = cb.call(operation: -> { operation_1_stub.perform_task }, fallback: -> { fallback_stub })
-               # Check Circuit Breaker state and result
+              # Check Circuit Breaker state and result
               expect(cb.state).to eq(:closed)
               expect(operation_1_result).to eq(fallback_stub)
             end
 
-            # The second request should exceed the error threshold and open the circuit. This should result in 
+            # The second request should exceed the error threshold and open the circuit. This should result in
             # the operation not being performed and the fallback being returned early.
             aggregate_failures do
               expect(operation_2_stub).not_to receive(:perform_task)
@@ -118,7 +118,6 @@ module Shift
           end
         end
       end
-
     end
   end
 end

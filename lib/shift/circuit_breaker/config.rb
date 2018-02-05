@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Shift
   module CircuitBreaker
     #
     # Global Configuration Object
     #
     # ==== Example Usage:
-    # 
+    #
     # Add an initializer in your application (eg. shift_circuit_breaker.rb)
     # with the following configs:
     #
@@ -16,7 +18,6 @@ module Shift
     # end
     #
     class Config
-
       include Singleton
 
       attr_accessor :new_relic_license_key, :new_relic_app_name, :sentry_dsn, :sentry_environments
@@ -26,7 +27,7 @@ module Shift
         configure_newrelic
       end
 
-      private 
+      private
 
       def configure_sentry
         if sentry_dsn
@@ -42,7 +43,6 @@ module Shift
           require "newrelic_rpm"
         end
       end
-
     end
   end
 end

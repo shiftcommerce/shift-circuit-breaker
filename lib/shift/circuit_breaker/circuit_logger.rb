@@ -1,17 +1,18 @@
+# frozen_string_literal: true
+
 module Shift
   module CircuitBreaker
     class CircuitLogger
-
       attr_accessor :logger, :external_error_logger
 
       delegate :debug, :fatal, :info, :warn, :add, :log, to: :logger
 
       ERROR_MESSAGE = <<~EOF
         ====================================================================================
-        CIRCUIT BREAKER REQUEST FAILURE: %{circuit_name}
+        CIRCUIT BREAKER REQUEST FAILURE: %<circuit_name>s
 
-        STATE: %{state}
-        MESSAGE: %{error_message}
+        STATE: %<state>s
+        MESSAGE: %<error_message>s
         ====================================================================================
         EOF
 
@@ -29,8 +30,7 @@ module Shift
         message = (ERROR_MESSAGE % context)
         logger.error(message)
         external_error_logger.call(message) if external_error_logger.respond_to?(:call)
-      end 
-
+      end
     end
   end
 end

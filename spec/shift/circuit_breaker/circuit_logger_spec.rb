@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 module Shift
   module CircuitBreaker
     describe CircuitLogger do
-
       context "#error" do
         it "logs the given error message" do
           # Arrange
@@ -39,7 +40,7 @@ module Shift
             expect(external_error_logger).to have_received(:call).with(include(error_message))
           end
         end
-      end 
+      end
 
       context "#info" do
         it "logs the given input" do
@@ -55,9 +56,8 @@ module Shift
 
           # Assert
           expect(logger_instance).to have_received(:info).with(include(message))
-        end  
-      end 
-
+        end
+      end
     end
   end
 end
