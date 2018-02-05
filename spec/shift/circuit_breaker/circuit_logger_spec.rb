@@ -4,8 +4,8 @@ module Shift
   module CircuitBreaker
     describe CircuitLogger do
 
-      context "Logging errors" do
-        it "logs the given input" do
+      context "#error" do
+        it "logs the given error message" do
           # Arrange
           logger_instance = ::Logger.new(STDOUT)
           logger = described_class.new(logger: logger_instance)
@@ -13,22 +13,30 @@ module Shift
           context  = { circuit_name: :test_circuit_breaker, error_message: exception.message, state: :open }
           error_message = (described_class::ERROR_MESSAGE % context)
 
-          # Act & Assert
-          expect(logger_instance).to receive(:error).with(include(error_message))
+          allow(logger_instance).to receive(:error)
+
+          # Act
           logger.error(context)
+
+          # Assert
+          expect(logger_instance).to have_received(:error).with(include(error_message))
         end     
       end 
 
-      context "Logging info" do
+      context "#info" do
         it "logs the given input" do
           # Arrange
           logger_instance = ::Logger.new(STDOUT)
           logger = described_class.new(logger: logger_instance)
           message = "some information to log"
 
-          # Act & Assert
-          expect(logger_instance).to receive(:info).with(include(message))
+          allow(logger_instance).to receive(:info)
+
+          # Act
           logger.info(message)
+
+          # Assert
+          expect(logger_instance).to have_received(:info).with(include(message))
         end  
       end 
 
