@@ -28,9 +28,9 @@ module Shift
         context "when the error_threshold is exceeded" do
           it "opens the curcuit returns the fallback" do
             # Arrange
-            operation_1_stub = instance_double('Operation1')
-            operation_2_stub = instance_double('Operation2')
-            operation_3_stub = instance_double('Operation3')
+            operation_1_stub = instance_double("Operation1")
+            operation_2_stub = instance_double("Operation2")
+            operation_3_stub = instance_double("Operation3")
             
             fallback_stub = instance_double("Fallback")
 
@@ -69,9 +69,9 @@ module Shift
         context "when the error_threshold is exceeded and skip_duration has expired" do
           it "closes the circuit and returns the operation result" do
             # Arrange
-            operation_1_stub = instance_double('Operation1')
-            operation_2_stub = instance_double('Operation2')
-            operation_3_stub = instance_double('Operation3')
+            operation_1_stub = instance_double("Operation1")
+            operation_2_stub = instance_double("Operation2")
+            operation_3_stub = instance_double("Operation3")
 
             fallback_stub = instance_double("Fallback")
             expected_result_stub = instance_double("ExpectedResult")
