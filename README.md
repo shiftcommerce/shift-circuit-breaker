@@ -1,3 +1,5 @@
+[ ![Codeship Status for shiftcommerce/shift-circuit-breaker](https://app.codeship.com/projects/76d6b9e0-ecaa-0135-f112-7a88d47e1dcf/status?branch=master)](https://app.codeship.com/projects/270371)
+
 # Shift Circuit Breaker
 
 The Shift Circuit Breaker library implements a generic mechanism for detecting, monitoring and controlling external service calls that will most-likely fail at some point (e.g. timeout) and cause request queuing. Although a plethora of Ruby circuit breaker libraries exist, those that are frequently updated have a dependency on Redis for persistence. We required a solution that didn't depend on persisting to a shared data store, i.e. a library that stores counters in local memory. As a result, the Shift Circuit Breaker was born.
