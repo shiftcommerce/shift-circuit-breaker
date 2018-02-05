@@ -6,7 +6,6 @@ module Shift
       describe BaseAdapter do
 
         context "#call" do
-
           it 'does raises NotImplementedError' do
             # Arrange
             message = "some message"
@@ -14,7 +13,6 @@ module Shift
             # Act & Assert
             expect { described_class.call(message) }.to raise_error(NotImplementedError)
           end
-
         end
 
       end

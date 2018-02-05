@@ -42,8 +42,8 @@ module Shift
             cb = described_class.new(:test_circuit_breaker, error_threshold: 2, skip_duration: default_skip_duration)
 
             # First and second requests should increment the error_count and result in #call being executed
-            # The operations will fail with Rack::Timeout::RequestTimeoutException, resulting in the exception
-            # being raised and caught, and the fallback being returned as the operation result
+            # The operations will fail with Timeout::Error, resulting in the exception being raised and caught,
+            # and the fallback being returned as the operation result
             [ operation_1_stub, operation_2_stub ].each do |operation_stub|
               aggregate_failures do
                 expect(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")     
@@ -84,8 +84,8 @@ module Shift
             cb = described_class.new(:test_circuit_breaker, error_threshold: 1, skip_duration: 1)
 
             # The first request should increment the error_count and result in the operation being performed
-            # The operation will fail with Rack::Timeout::RequestTimeoutException, resulting in the exception
-            # being caught and the fallback being returned as the operation result
+            # The operation will fail with Timeout::Error, resulting in the exception being caught and the 
+            # fallback being returned as the operation result
             aggregate_failures do
               operation_1_result = cb.call(operation: -> { operation_1_stub.perform_task }, fallback: -> { fallback_stub })
                # Check Circuit Breaker state and result

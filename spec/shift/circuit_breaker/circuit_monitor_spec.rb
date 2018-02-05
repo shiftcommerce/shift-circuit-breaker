@@ -5,7 +5,6 @@ module Shift
     describe CircuitMonitor do
 
       context "Recording metrics" do
-
         it "logs the metric information" do
           # Arrange
           logger_instance = ::Logger.new(STDOUT)
@@ -18,7 +17,6 @@ module Shift
           expect(logger_instance).to receive(:info).with(include(metric))
           monitor.record_metric(circuit_breaker_name, circuit_breaker_state)
         end
-        
       end 
 
     end

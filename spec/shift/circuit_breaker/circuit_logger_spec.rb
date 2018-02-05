@@ -5,7 +5,6 @@ module Shift
     describe CircuitLogger do
 
       context "Logging errors" do
-
         it "logs the given input" do
           # Arrange
           logger_instance = ::Logger.new(STDOUT)
@@ -17,12 +16,10 @@ module Shift
           # Act & Assert
           expect(logger_instance).to receive(:error).with(include(error_message))
           logger.error(context)
-        end
-        
+        end     
       end 
 
       context "Logging info" do
-
         it "logs the given input" do
           # Arrange
           logger_instance = ::Logger.new(STDOUT)
@@ -32,8 +29,7 @@ module Shift
           # Act & Assert
           expect(logger_instance).to receive(:info).with(include(message))
           logger.info(message)
-        end
-        
+        end  
       end 
 
     end

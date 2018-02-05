@@ -6,7 +6,6 @@ module Shift
       describe NewRelicAdapter do
 
         context "#call" do
-
           it 'does not raise NotImplementedError' do
             # Arrange
             message = "some message"
@@ -14,7 +13,6 @@ module Shift
             # Act & Assert
             expect { described_class.call(message) }.not_to raise_error(NotImplementedError)
           end
-
         end
 
       end
