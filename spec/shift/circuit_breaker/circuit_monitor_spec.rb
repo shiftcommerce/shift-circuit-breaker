@@ -9,14 +9,14 @@ module Shift
           # Arrange
           circuit_breaker_name  = :test_circuit_breaker
           circuit_breaker_state = :open
-          logger_instance       = ::Logger.new(STDOUT)
-          monitor               = described_class.new(logger: logger_instance)
           metric                = "Custom/#{circuit_breaker_name.to_s.classify}CircuitBreaker/#{circuit_breaker_state.to_s.classify}"
+          logger_instance       = ::Logger.new(STDOUT)
+          circuit_monitor       = described_class.new(logger: logger_instance)
 
           allow(logger_instance).to receive(:info)
 
           # Act 
-          monitor.record_metric(circuit_breaker_name, circuit_breaker_state)
+          circuit_monitor.record_metric(circuit_breaker_name, circuit_breaker_state)
 
           # Assert
           expect(logger_instance).to have_received(:info).with(include(metric))
@@ -26,17 +26,20 @@ module Shift
           # Arrange
           circuit_breaker_name  = :test_circuit_breaker
           circuit_breaker_state = :open
-          metric_monitor        = Shift::CircuitBreaker::Adapters::NewRelicAdapter
-          monitor               = described_class.new(monitor: metric_monitor)
           metric                = "Custom/#{circuit_breaker_name.to_s.classify}CircuitBreaker/#{circuit_breaker_state.to_s.classify}"
+          metric_monitor        = Shift::CircuitBreaker::Adapters::NewRelicAdapter
+          circuit_monitor       = described_class.new(monitor: metric_monitor)
 
           allow(metric_monitor).to receive(:call)
 
           # Act 
-          monitor.record_metric(circuit_breaker_name, circuit_breaker_state)
+          circuit_monitor.record_metric(circuit_breaker_name, circuit_breaker_state)
 
           # Assert
-          expect(metric_monitor).to have_received(:call).with(metric)
+          aggregate_failures do
+            expect(circuit_monitor.monitor).to eq(metric_monitor)
+            expect(metric_monitor).to have_received(:call).with(metric)
+          end
         end
       end 
 

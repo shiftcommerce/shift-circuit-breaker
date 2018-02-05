@@ -10,9 +10,9 @@ module Shift
 
         it "returns the expected result" do
           # Arrange
-          operation_stub = instance_double("Operation")
-          fallback_stub = instance_double("Fallback")
-          expected_result_stub = instance_double("ExpectedResult")
+          operation_stub        = instance_double("Operation")
+          fallback_stub         = instance_double("Fallback")
+          expected_result_stub  = instance_double("ExpectedResult")
 
           allow(operation_stub).to receive(:perform_task).and_return(expected_result_stub)
 
@@ -31,9 +31,9 @@ module Shift
 
         it "rescues the exception and returns the fallback" do
           # Arrange
-          operation_stub = instance_double("Operation")
-          fallback_stub = instance_double("Fallback")
-          additional_exception_classes = [ Faraday::ClientError ]
+          operation_stub                = instance_double("Operation")
+          fallback_stub                 = instance_double("Fallback")
+          additional_exception_classes  = [ Faraday::ClientError ]
 
           allow(operation_stub).to receive(:perform_task).and_raise(Faraday::ClientError, "client error")
 
@@ -126,8 +126,8 @@ module Shift
           context "when given an operation that does not implement #call" do
             it "raises an ArgumentError" do
               # Arrange
-              operation_stub = instance_double("Operation")
-              fallback_stub = instance_double("Fallback")
+              operation_stub  = instance_double("Operation")
+              fallback_stub   = instance_double("Fallback")
 
               # Act 
               cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
@@ -140,8 +140,8 @@ module Shift
           context "when given a fallback that does not implement #call" do
             it "raises an ArgumentError" do
               # Arrange
-              operation_stub = instance_double("Operation")
-              fallback_stub = instance_double("Fallback")
+              operation_stub  = instance_double("Operation")
+              fallback_stub   = instance_double("Fallback")
 
               # Act 
               cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
