@@ -77,16 +77,10 @@ module Shift
         monitor.record_metric(name, state)
         response
       rescue *exception_classes
-        puts "::::::::EXCEPTION RAISED:::::::::"
         record_error
         set_state
         monitor.record_metric(name, state)
         logger.error(circuit_name: name, state: state, error_message: $!.message)
-        puts "::::::::EXCEPTION.error_threshold::::::::: #{error_threshold.inspect}"
-        puts "::::::::EXCEPTION.error_count::::::::: #{error_count.inspect}"
-        puts "::::::::EXCEPTION::::::::: #{last_error_time.inspect}"
-        puts "::::::::EXCEPTION::::::::: #{skip_duration.inspect}"
-        puts "::::::::EXCEPTION::::::::: #{state.inspect}"
         fallback.call
       end
 
