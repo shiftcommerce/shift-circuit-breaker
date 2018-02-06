@@ -49,9 +49,9 @@ module Shift
       def call(operation:, fallback:)
         raise ArgumentError unless operation.respond_to?(:call) && fallback.respond_to?(:call)
         set_state
-        if state == :open 
+        if state == :open
           monitor.record_metric(name, state)
-          return fallback.call 
+          return fallback.call
         end
         perform_operation(operation, fallback)
       end

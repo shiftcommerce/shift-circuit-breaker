@@ -41,7 +41,7 @@ module Shift
             # Act & Assert
             cb = described_class.new(:test_circuit_breaker, error_threshold: 2, skip_duration: default_skip_duration)
 
-            # The first operation will fail with Timeout::Error, resulting in the exception being caught and 
+            # The first operation will fail with Timeout::Error, resulting in the exception being caught and
             # the fallback being returned as the operation result. The error_count is incremented to 1.
             aggregate_failures do
               expect(operation_1_stub).to receive(:perform_task)
@@ -52,7 +52,7 @@ module Shift
               expect(operation_1_result).to eq(fallback_stub)
             end
 
-            # The second operation will also fail with Timeout::Error, resulting in the exception being caught and 
+            # The second operation will also fail with Timeout::Error, resulting in the exception being caught and
             # the fallback being returned as the operation result. The error_count is incremented to 2 and the circuit
             # is opened.
             aggregate_failures do
@@ -64,7 +64,7 @@ module Shift
               expect(operation_2_result).to eq(fallback_stub)
             end
 
-            # The third operation will not be run as the circuit is open. This should result in #call not being executed 
+            # The third operation will not be run as the circuit is open. This should result in #call not being executed
             # and the fallback being returned early.
             aggregate_failures do
               expect(operation_3_stub).not_to receive(:perform_task)
@@ -95,7 +95,7 @@ module Shift
             # Act & Assert
             cb = described_class.new(:test_circuit_breaker, error_threshold: 2, skip_duration: 10)
 
-             # The first operation will fail with Timeout::Error, resulting in the exception being caught and 
+            # The first operation will fail with Timeout::Error, resulting in the exception being caught and
             # the fallback being returned as the operation result. The error_count is incremented to 1.
             aggregate_failures do
               expect(operation_1_stub).to receive(:perform_task)
@@ -106,7 +106,7 @@ module Shift
               expect(operation_1_result).to eq(fallback_stub)
             end
 
-            # The second operation will also fail with Timeout::Error, resulting in the exception being caught and 
+            # The second operation will also fail with Timeout::Error, resulting in the exception being caught and
             # the fallback being returned as the operation result. The error_count is incremented to 2 and the circuit
             # is opened.
             aggregate_failures do
