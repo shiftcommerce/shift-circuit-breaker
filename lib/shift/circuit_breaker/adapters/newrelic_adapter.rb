@@ -5,6 +5,7 @@ module Shift
     module Adapters
       class NewRelicAdapter < BaseAdapter
         def self.call(message)
+          binding.pry
           ::NewRelic::Agent.increment_metric(message) if defined?(::NewRelic::Agent)
         end
       end

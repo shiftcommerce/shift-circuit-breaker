@@ -76,7 +76,7 @@ module Shift
       rescue *exception_classes
         record_error
         monitor.record_metric(name, state)
-        logger.error(circuit_name: name, state: state, error_message: $!.message)
+        logger.error({ circuit_name: name, state: state, error_message: $!.message })
         fallback.call
       end
 

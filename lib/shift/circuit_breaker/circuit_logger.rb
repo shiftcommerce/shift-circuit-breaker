@@ -28,6 +28,7 @@ module Shift
       # @param [Object] context - contains :circuit_name, :state, :error_message
       def error(context)
         message = (ERROR_MESSAGE % context)
+        binding.pry
         logger.error(message)
         external_error_logger.call(message) if external_error_logger.respond_to?(:call)
       end
