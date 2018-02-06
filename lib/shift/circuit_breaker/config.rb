@@ -22,14 +22,14 @@ module Shift
 
       attr_accessor :new_relic_license_key, :new_relic_app_name, :sentry_dsn, :sentry_environments
 
-      def initialize_all_dependencies
-        configure_sentry
-        configure_newrelic
+      def initialize_dependencies
+        initialise_sentry
+        initialise_newrelic
       end
 
       private
 
-      def configure_sentry
+      def initialise_sentry
         if sentry_dsn
           Raven.configure do |config|
             config.dsn = sentry_dsn
@@ -38,7 +38,7 @@ module Shift
         end
       end
 
-      def configure_newrelic
+      def initialise_newrelic
         if new_relic_app_name.present? && new_relic_license_key.present?
           require "newrelic_rpm"
         end
