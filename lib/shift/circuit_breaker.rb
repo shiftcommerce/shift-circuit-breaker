@@ -50,7 +50,7 @@ module Shift
         @config = Shift::CircuitBreaker::Config.instance.tap do |config|
           yield config if block_given?
         end
-        @config.initialize_all
+        @config.initialize_all_dependencies
       end
     end
   end

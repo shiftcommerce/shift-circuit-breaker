@@ -48,15 +48,18 @@ module Shift
       # @param [Proc] fallback  - The result returned if the operation is not performed or raises an exception
       def call(operation:, fallback:)
         raise ArgumentError unless operation.respond_to?(:call) && fallback.respond_to?(:call)
-        set_state
-        state == :open ? fallback.call : perform_operation(operation, fallback)
+        if state == :open 
+          monitor.record_metric(name, state)
+          return fallback.call 
+        end
+        perform_operation(operation, fallback)
       end
 
       private
 
       def set_state
         # The curcuit is opened/tripped if the error_threshold is exceeded
-        # (error_count >= error_threshold) and the last_error_time is within
+        # (error_count > error_threshold) and the last_error_time is within
         # the skip_duration (see comments in #skip_duration_expired?).
         self.state = (error_count >= error_threshold) && !skip_duration_expired? ? :open : :closed
       end
@@ -74,9 +77,16 @@ module Shift
         monitor.record_metric(name, state)
         response
       rescue *exception_classes
+        puts "::::::::EXCEPTION RAISED:::::::::"
         record_error
+        set_state
         monitor.record_metric(name, state)
-        logger.error({ circuit_name: name, state: state, error_message: $!.message })
+        logger.error(circuit_name: name, state: state, error_message: $!.message)
+        puts "::::::::EXCEPTION.error_threshold::::::::: #{error_threshold.inspect}"
+        puts "::::::::EXCEPTION.error_count::::::::: #{error_count.inspect}"
+        puts "::::::::EXCEPTION::::::::: #{last_error_time.inspect}"
+        puts "::::::::EXCEPTION::::::::: #{skip_duration.inspect}"
+        puts "::::::::EXCEPTION::::::::: #{state.inspect}"
         fallback.call
       end
 

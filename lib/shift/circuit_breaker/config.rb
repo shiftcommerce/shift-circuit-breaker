@@ -22,7 +22,7 @@ module Shift
 
       attr_accessor :new_relic_license_key, :new_relic_app_name, :sentry_dsn, :sentry_environments
 
-      def initialize_all
+      def initialize_all_dependencies
         configure_sentry
         configure_newrelic
       end
