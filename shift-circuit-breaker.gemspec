@@ -11,8 +11,9 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.summary     = "A generic implementation of the Circuit Breaker pattern in Ruby"
   s.description = <<-DOC
-    The library provides a mechanism for detecting, monitoring and controlling slow or
-    unresponsive external service call timeouts, thus preventing cascading system failures.
+    The library provides a mechanism for detecting, monitoring and controlling 
+    external service calls that will most-likely fail at some point (e.g. timeout) 
+    and cause request queuing, thus preventing cascading system failures. 
   DOC
   s.homepage    = "https://github.com/shiftcommerce/shift-circuit-breaker"
   s.authors     = ["Mufudzi Masaire"]
