@@ -48,6 +48,7 @@ module Shift
       # @param [Proc] fallback  - The result returned if the operation is not performed or raises an exception
       def call(operation:, fallback:)
         raise ArgumentError unless operation.respond_to?(:call) && fallback.respond_to?(:call)
+        set_state
         if state == :open 
           monitor.record_metric(name, state)
           return fallback.call 
@@ -71,19 +72,6 @@ module Shift
         (Time.now - last_error_time) > skip_duration
       end
 
-      def perform_operation(operation, fallback)
-        response = operation.call
-        reset_state
-        monitor.record_metric(name, state)
-        response
-      rescue *exception_classes
-        record_error
-        set_state
-        monitor.record_metric(name, state)
-        logger.error(circuit_name: name, state: state, error_message: $!.message)
-        fallback.call
-      end
-
       def reset_state
         # Reset the error attributes to default values.
         self.error_count = 0
@@ -96,6 +84,23 @@ module Shift
         self.error_count += 1
         # Set the time the error occured.
         self.last_error_time = Time.now
+      end
+
+      def perform_operation(operation, fallback)
+        response = operation.call
+        reset_state
+        monitor.record_metric(name, state)
+        response
+      rescue *exception_classes
+        handle_exception($!, fallback)
+      end
+
+      def handle_exception(exception, fallback)
+        record_error
+        set_state
+        monitor.record_metric(name, state)
+        logger.error(circuit_name: name, state: state, error_message: exception.message)
+        fallback.call
       end
     end
   end
