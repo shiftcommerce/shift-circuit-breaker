@@ -66,7 +66,7 @@ module Shift
       end
 
       def skip_duration_expired?
-        return true if last_error_time.nil?
+        return true unless last_error_time.present?
         # IF the difference in time between now and the last_error_time
         # is greater than the skip_duration, then it will have expired.
         (Time.now - last_error_time) > skip_duration

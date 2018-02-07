@@ -2,15 +2,6 @@
 Attribute:
   enabled: false
 
-# To allow at max 2 duplicate method calls.
-# Beyond which it is expected to refactor.
-DuplicateMethodCall:
-  max_calls: 2
-
-# To suppress "Assumed to much for the variable" errorss
-InstanceVariableAssumption:
-  enabled: false
-
 LongParameterList:
   enabled: true
   max_statements: 5
@@ -19,10 +10,6 @@ LongParameterList:
     - 'self.call'
 
 ManualDispatch:
-  enabled: false
-
-# To suppress nil check warnings
-NilCheck:
   enabled: false
 
 IrresponsibleModule:
