@@ -1,0 +1,33 @@
+# To suppress "writable attribute" errors
+Attribute:
+  enabled: false
+
+# To suppress "V1" module name errors
+UncommunicativeModuleName:
+  enabled: false
+
+# To suppress "Assumed to much for the variable" errorss
+InstanceVariableAssumption:
+  enabled: false
+
+# To allow at max 2 duplicate method calls.
+# Beyond which it is expected to refactor.
+DuplicateMethodCall:
+  max_calls: 2
+
+# To suppress nil check warnings
+NilCheck:
+  enabled: false
+
+IrresponsibleModule:
+  enabled: false
+
+LongParameterList:
+  enabled: true
+  max_statements: 5
+  exclude:
+    - initialize
+    - 'self.call'
+
+exclude_paths:
+  - spec
