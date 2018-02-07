@@ -75,3 +75,7 @@ With regards to monitoring and logging, integration with New Relic and Sentry is
                                               monitor: Shift::CircuitBreaker::CircuitMonitor.new(monitor: CUSTOM_MONITOR)
                                             )
 ```
+
+## Contributing
+
+Bug reports and pull requests are welcome. Please read our documentation on [CONTRIBUTING](CONTRIBUTING.md).
