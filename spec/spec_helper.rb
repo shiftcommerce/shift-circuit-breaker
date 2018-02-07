@@ -109,3 +109,5 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+RSpec::Expectations.configuration.on_potential_false_positives = :nothing

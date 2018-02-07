@@ -5,6 +5,10 @@ require "spec_helper"
 module Shift
   module CircuitBreaker
     describe CircuitLogger do
+      before do
+        allow($stdout).to receive(:write)
+      end
+
       context "#error" do
         it "logs the given error message" do
           # Arrange

@@ -3,6 +3,7 @@ Metrics/BlockLength:
     - 'Rakefile'
     - '**/*.rake'
     - 'spec/**/*'
+    - 'shift-circuit-breaker.gemspec'
 
 Metrics/BlockNesting:
   Enabled: false

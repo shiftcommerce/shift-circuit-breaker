@@ -4,6 +4,10 @@ require "spec_helper"
 
 module Shift
   describe CircuitBreaker do
+    before do
+      allow($stdout).to receive(:write)
+    end
+
     context "Configuration" do
       it "correctly assigns the configuration keys" do
         # Arrange

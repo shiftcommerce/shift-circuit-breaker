@@ -5,6 +5,10 @@ require "spec_helper"
 module Shift
   module CircuitBreaker
     describe CircuitMonitor do
+      before do
+        allow($stdout).to receive(:write)
+      end
+
       context "#record_metric" do
         it "logs the metric information" do
           # Arrange

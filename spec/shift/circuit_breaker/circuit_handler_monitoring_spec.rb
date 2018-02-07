@@ -5,6 +5,10 @@ require "spec_helper"
 module Shift
   module CircuitBreaker
     describe CircuitHandler do
+      before do
+        allow($stdout).to receive(:write)
+      end
+
       context "Monitoring" do
         let(:default_error_threshold) { 10 }
         let(:default_skip_duration)   { 60 }
