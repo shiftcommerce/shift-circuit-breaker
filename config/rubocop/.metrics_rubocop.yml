@@ -1,9 +1,9 @@
 Metrics/BlockLength:
   Exclude:
-    - 'Rakefile'
-    - '**/*.rake'
-    - 'spec/**/*'
-    - 'shift-circuit-breaker.gemspec'
+    - "Rakefile"
+    - "**/*.rake"
+    - "spec/**/*"
+    - "shift-circuit-breaker.gemspec"
 
 Metrics/BlockNesting:
   Enabled: false

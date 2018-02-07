@@ -1,4 +1,3 @@
-
 # To find more info about this,
 # please read the following line
 # http://www.rubydoc.info/github/bbatsov/rubocop/Rubocop
@@ -13,10 +12,10 @@ inherit_from:
 
 AllCops:
   Exclude:
-    - "tmp"
+    - "bin/*"
+    - "config/*"
     - "Gemfile"
     - "Gemfile.lock"
-    - "config/*"
-    - "bin/*"
-    - "spec"
+    - "spec/*"
+    - "tmp/*"
   TargetRubyVersion: 2.3

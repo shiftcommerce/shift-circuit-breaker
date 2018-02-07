@@ -6,7 +6,7 @@ module Shift
     # === Overview
     #
     # Implements a generic mechanism for detecting external service call timeouts and reduces the
-    # time spent waiting for further requests that will most-likely fail and cause request queueing.
+    # time spent waiting for further requests that will most-likely fail (e.g. timeout) and cause request queueing.
     #
     # Similar to a conventional circuit breaker, when a circuit is closed it allows operations
     # to flow through. When the error_threshold is exceeded (tripped), the circuit is then opened for
@@ -59,8 +59,8 @@ module Shift
       private
 
       def set_state
-        # The curcuit is opened/tripped if the error_threshold is exceeded
-        # (error_count > error_threshold) and the last_error_time is within
+        # The curcuit is opened/tripped if the error_threshold is met or exceeded
+        # (error_count >= error_threshold) and the last_error_time is within
         # the skip_duration (see comments in #skip_duration_expired?).
         self.state = (error_count >= error_threshold) && !skip_duration_expired? ? :open : :closed
       end

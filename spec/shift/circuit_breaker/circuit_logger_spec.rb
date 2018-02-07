@@ -26,22 +26,22 @@ module Shift
           expect(logger_instance).to have_received(:error).with(include(error_message))
         end
 
-        it "logs the given error message using the provided external_error_logger" do
+        it "logs the given error message using the provided remote_logger" do
           # Arrange
-          context               = { circuit_name: :test_circuit_breaker, error_message: "timeout", state: :open }
-          error_message         = (described_class::ERROR_MESSAGE % context)
-          external_error_logger = Shift::CircuitBreaker::Adapters::SentryAdapter
-          logger                = described_class.new(external_error_logger: external_error_logger)
+          context       = { circuit_name: :test_circuit_breaker, error_message: "timeout", state: :open }
+          error_message = (described_class::ERROR_MESSAGE % context)
+          remote_logger = Shift::CircuitBreaker::Adapters::SentryAdapter
+          logger        = described_class.new(remote_logger: remote_logger)
 
-          allow(external_error_logger).to receive(:call)
+          allow(remote_logger).to receive(:call)
 
           # Act
           logger.error(context)
 
           # Assert
           aggregate_failures do
-            expect(logger.external_error_logger).to eq(external_error_logger)
-            expect(external_error_logger).to have_received(:call).with(include(error_message))
+            expect(logger.remote_logger).to eq(remote_logger)
+            expect(remote_logger).to have_received(:call).with(include(error_message))
           end
         end
       end

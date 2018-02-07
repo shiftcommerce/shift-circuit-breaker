@@ -1,19 +1,12 @@
-# Ignore gem file lock
-Gemfile.lock
-
-# Ignore bundler config.
+**.DS_Store
 /.bundle
-
-# Ignored all log, doc and temp files etc.
-.idea
-.env
-/.yardoc
-/_yardoc/*
 /coverage/*
 /doc/*
+.env
+Gemfile.lock
+.idea
 /log/*
 /pkg/*
 /tmp/*
-
-# Ignore Mac files
-**.DS_Store
+/.yardoc
+/_yardoc/*
