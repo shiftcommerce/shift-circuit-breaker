@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
 
   s.add_dependency "activesupport", ">= 3.0.0"
+  s.add_dependency "bundler", ">= 1.16.1"
   s.add_dependency "newrelic_rpm", ">= 3.1"
   s.add_dependency "sentry-raven", ">= 1.2.3"
 
@@ -35,4 +36,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "~> 3.7"
   s.add_development_dependency "rubocop", "~> 0.52.1"
   s.add_development_dependency "timecop", "~> 0.9.1"
+  s.add_development_dependency "pry", "~> 0.11.3"
 end

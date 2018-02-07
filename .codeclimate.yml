@@ -1,11 +1,11 @@
 version: "2"
 plugins:
-  reek:
-    enabled: true
-  rubocop:
-    enabled: true
   duplication:
     enabled: true
     config:
       languages:
       - ruby
+  reek:
+    enabled: true
+  rubocop:
+    enabled: true

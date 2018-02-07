@@ -4,11 +4,16 @@ Gemfile.lock
 # Ignore bundler config.
 /.bundle
 
-# Ignore all logfiles and tempfiles.
-/tmp/*
-/log/*
+# Ignored all log, doc and temp files etc.
 .idea
 .env
+/.yardoc
+/_yardoc/*
+/coverage/*
+/doc/*
+/log/*
+/pkg/*
+/tmp/*
 
 # Ignore Mac files
 **.DS_Store
