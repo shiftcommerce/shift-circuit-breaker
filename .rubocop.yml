@@ -1,0 +1,21 @@
+# To find more info about this,
+# please read the following line
+# http://www.rubydoc.info/github/bbatsov/rubocop/Rubocop
+
+inherit_from:
+  - config/rubocop/.layout_rubocop.yml
+  - config/rubocop/.lint_rubocop.yml
+  - config/rubocop/.metrics_rubocop.yml
+  - config/rubocop/.naming_rubocop.yml
+  - config/rubocop/.performance_rubocop.yml
+  - config/rubocop/.style_rubocop.yml
+
+AllCops:
+  Exclude:
+    - "bin/*"
+    - "config/*"
+    - "Gemfile"
+    - "Gemfile.lock"
+    - "spec/*"
+    - "tmp/*"
+  TargetRubyVersion: 2.3

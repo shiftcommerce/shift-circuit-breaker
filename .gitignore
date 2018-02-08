@@ -1,0 +1,12 @@
+**.DS_Store
+/.bundle
+/coverage/*
+/doc/*
+.env
+Gemfile.lock
+.idea
+/log/*
+/pkg/*
+/tmp/*
+/.yardoc
+/_yardoc/*
