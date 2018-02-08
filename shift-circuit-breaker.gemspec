@@ -27,10 +27,10 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- { test, spec, features }/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
 
-  s.add_dependency "activesupport", ">= 3.0.0"
-  s.add_dependency "bundler", ">= 1.16.1"
-  s.add_dependency "newrelic_rpm", ">= 3.1"
-  s.add_dependency "sentry-raven", ">= 1.2.3"
+  s.add_runtime_dependency "activesupport", "~> 5.1", ">= 5.1.4"
+  s.add_runtime_dependency "bundler", "~> 1.16"
+  s.add_runtime_dependency "newrelic_rpm", "~> 4.8", ">= 4.8.0.341"
+  s.add_runtime_dependency "sentry-raven", "~> 2.7", ">= 2.7.2"
 
   s.add_development_dependency "pry", "~> 0.11.3"
   s.add_development_dependency "rake", "~> 12.3"
