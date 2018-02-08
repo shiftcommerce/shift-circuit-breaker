@@ -3,6 +3,7 @@
 /coverage/*
 /doc/*
 .env
+*.gem
 Gemfile.lock
 .idea
 /log/*
