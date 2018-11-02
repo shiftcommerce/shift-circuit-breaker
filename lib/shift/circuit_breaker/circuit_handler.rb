@@ -15,9 +15,9 @@ module Shift
     class CircuitHandler
       attr_accessor :name, :error_threshold, :skip_duration, :exception_classes, :enable_error_logging, :error_count
       attr_accessor :last_error_time, :state, :logger, :monitor
-      
+
       DEFAULT_EXCEPTION_CLASSES = [Net::OpenTimeout, Net::ReadTimeout, Faraday::TimeoutError, Timeout::Error].freeze
-      
+
       # Initializer creates an instance of the service
       #
       # @param [Symbol]  name              - the name used to identify the circuit breaker
@@ -28,13 +28,13 @@ module Shift
       # @param [Object]  logger            - service to handle error logging
       # @param [Object]  monitor           - service to monitor metric
       def initialize(name,
-        error_threshold:,
-        skip_duration:,
-        additional_exception_classes: [],
-        enable_error_logging: true,
-        logger: Shift::CircuitBreaker::CircuitLogger.new,
-        monitor: Shift::CircuitBreaker::CircuitMonitor.new)
-        
+                     error_threshold:,
+                     skip_duration:,
+                     additional_exception_classes: [],
+                     enable_error_logging: true,
+                     logger: Shift::CircuitBreaker::CircuitLogger.new,
+                     monitor: Shift::CircuitBreaker::CircuitMonitor.new)
+
         self.name                 = name
         self.error_threshold      = error_threshold
         self.skip_duration        = skip_duration
@@ -46,7 +46,7 @@ module Shift
         self.last_error_time      = nil
         self.state                = :closed
       end
-      
+
       # Performs the given operation within the circuit
       # @param [Proc] operation - the operation to be performed
       # @param [Proc] fallback  - The result returned if the operation is not performed or raises an exception
@@ -59,10 +59,10 @@ module Shift
         end
         perform_operation(operation, fallback)
       end
-      
+
       private
-      
-      
+
+
       def set_state
         # The curcuit is opened/tripped if the error_threshold is met or exceeded
         # (error_count >= error_threshold) and the last_error_time is within
@@ -107,7 +107,7 @@ module Shift
         monitor.record_metric(name, state)
         fallback.call
       end
-      
+
       def log_errors(exception)
         logger.error(circuit_name: name, state: state, error_message: exception.message) if enable_error_logging
       end
