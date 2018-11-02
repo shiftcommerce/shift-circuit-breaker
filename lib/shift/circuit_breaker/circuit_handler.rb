@@ -13,39 +13,40 @@ module Shift
     # the defined skip_duration, ie. no operations are executed and the provided fallback is called.
     #
     class CircuitHandler
-      attr_accessor :name, :error_threshold, :skip_duration, :exception_classes, :log_errors, :error_count, :last_error_time, :state, :logger , :monitor
-
+      attr_accessor :name, :error_threshold, :skip_duration, :exception_classes, :enable_error_logging, :error_count
+      attr_accessor :last_error_time, :state, :logger, :monitor
+      
       DEFAULT_EXCEPTION_CLASSES = [Net::OpenTimeout, Net::ReadTimeout, Faraday::TimeoutError, Timeout::Error].freeze
-
+      
       # Initializer creates an instance of the service
       #
       # @param [Symbol]  name              - the name used to identify the circuit breaker
       # @param [Integer] error_threshold   - The minimum error threshold required for the circuit to be opened/tripped
       # @param [Integer] skip_duration     - The duration in seconds the circuit should be open for before operations are allowed through/executed
       # @param [Array]   additional_exception_classes - Any additional exception classes to rescue along the DEFAULT_EXCEPTION_CLASSES
-      # @param [Boolean] log_errors        - Decided whether to log errors or not. Still they will be monitored
+      # @param [Boolean] enable_error_logging         - Decided whether to log errors or not. Still they will be monitored
       # @param [Object]  logger            - service to handle error logging
       # @param [Object]  monitor           - service to monitor metric
       def initialize(name,
-                     error_threshold:,
-                     skip_duration:,
-                     additional_exception_classes: [],
-                     log_errors: true,
-                     logger: Shift::CircuitBreaker::CircuitLogger.new,
-                     monitor: Shift::CircuitBreaker::CircuitMonitor.new)
-
-        self.name               = name
-        self.error_threshold    = error_threshold
-        self.skip_duration      = skip_duration
-        self.log_errors         = log_errors
-        self.exception_classes  = (additional_exception_classes | DEFAULT_EXCEPTION_CLASSES)
-        self.logger             = logger
-        self.monitor            = monitor
-        self.error_count        = 0
-        self.last_error_time    = nil
-        self.state              = :closed
+        error_threshold:,
+        skip_duration:,
+        additional_exception_classes: [],
+        enable_error_logging: true,
+        logger: Shift::CircuitBreaker::CircuitLogger.new,
+        monitor: Shift::CircuitBreaker::CircuitMonitor.new)
+        
+        self.name                 = name
+        self.error_threshold      = error_threshold
+        self.skip_duration        = skip_duration
+        self.enable_error_logging = enable_error_logging
+        self.exception_classes    = (additional_exception_classes | DEFAULT_EXCEPTION_CLASSES)
+        self.logger               = logger
+        self.monitor              = monitor
+        self.error_count          = 0
+        self.last_error_time      = nil
+        self.state                = :closed
       end
-
+      
       # Performs the given operation within the circuit
       # @param [Proc] operation - the operation to be performed
       # @param [Proc] fallback  - The result returned if the operation is not performed or raises an exception
@@ -58,9 +59,10 @@ module Shift
         end
         perform_operation(operation, fallback)
       end
-
+      
       private
-
+      
+      
       def set_state
         # The curcuit is opened/tripped if the error_threshold is met or exceeded
         # (error_count >= error_threshold) and the last_error_time is within
@@ -101,9 +103,13 @@ module Shift
       def handle_exception(exception, fallback)
         record_error
         set_state
+        log_errors(exception)
         monitor.record_metric(name, state)
-        logger.error(circuit_name: name, state: state, error_message: exception.message) if log_errors
         fallback.call
+      end
+      
+      def log_errors(exception)
+        logger.error(circuit_name: name, state: state, error_message: exception.message) if enable_error_logging
       end
     end
   end
