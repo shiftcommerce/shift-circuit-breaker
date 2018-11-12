@@ -156,9 +156,11 @@ module Shift
             operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
 
             # Assert
-            expect(operation_result).to eq(fallback_stub)
-            expect(cb.error_count).to eq(1)
-            expect(error_logger).to have_received(:error)
+            aggregate_failures do
+              expect(operation_result).to eq(fallback_stub)
+              expect(cb.error_count).to eq(1)
+              expect(error_logger).to have_received(:error)
+            end
           end
         end
 
@@ -176,9 +178,11 @@ module Shift
             operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
 
             # Assert
-            expect(operation_result).to eq(fallback_stub)
-            expect(cb.error_count).to eq(1)
-            expect(error_logger).not_to have_received(:error)
+            aggregate_failures do
+              expect(operation_result).to eq(fallback_stub)
+              expect(cb.error_count).to eq(1)
+              expect(error_logger).not_to have_received(:error)
+            end
           end
         end
       end
