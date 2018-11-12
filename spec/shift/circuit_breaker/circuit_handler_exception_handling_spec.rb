@@ -143,7 +143,7 @@ module Shift
         let(:default_skip_duration)   { 6 }
 
         context "when it is enabled" do
-          it "it should have logged errors" do
+          it "should log errors" do
             # Arrange
             operation_stub  = instance_double("Operation")
             fallback_stub   = instance_double("Fallback")
@@ -165,7 +165,7 @@ module Shift
         end
 
         context "when it is disabled" do
-          it "it should have not logged errors" do
+          it "should not log errors" do
             # Arrange
             operation_stub  = instance_double("Operation")
             fallback_stub   = instance_double("Fallback")
@@ -174,7 +174,7 @@ module Shift
             allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
             allow(error_logger).to receive(:error).and_return({})
             # Act
-            cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration, enable_error_logging: false, logger: error_logger)
+            cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration, error_logging_enabled: false, logger: error_logger)
             operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
 
             # Assert
