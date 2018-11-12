@@ -137,6 +137,55 @@ module Shift
           end
         end
       end
+
+      context "Error Logging" do
+        let(:default_error_threshold) { 5 }
+        let(:default_skip_duration)   { 6 }
+
+        context "when it is enabled" do
+          it "should log errors" do
+            # Arrange
+            operation_stub  = instance_double("Operation")
+            fallback_stub   = instance_double("Fallback")
+            error_logger    = instance_double("Error")
+
+            allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
+            allow(error_logger).to receive(:error).and_return({})
+            # Act
+            cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration, logger: error_logger)
+            operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
+
+            # Assert
+            aggregate_failures do
+              expect(operation_result).to eq(fallback_stub)
+              expect(cb.error_count).to eq(1)
+              expect(error_logger).to have_received(:error)
+            end
+          end
+        end
+
+        context "when it is disabled" do
+          it "should not log errors" do
+            # Arrange
+            operation_stub  = instance_double("Operation")
+            fallback_stub   = instance_double("Fallback")
+            error_logger    = instance_double("Error")
+
+            allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
+            allow(error_logger).to receive(:error).and_return({})
+            # Act
+            cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration, error_logging_enabled: false, logger: error_logger)
+            operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
+
+            # Assert
+            aggregate_failures do
+              expect(operation_result).to eq(fallback_stub)
+              expect(cb.error_count).to eq(1)
+              expect(error_logger).not_to have_received(:error)
+            end
+          end
+        end
+      end
     end
   end
 end
