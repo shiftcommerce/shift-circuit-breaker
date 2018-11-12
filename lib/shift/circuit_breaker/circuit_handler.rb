@@ -39,7 +39,7 @@ module Shift
         self.name                 = name
         self.error_threshold      = error_threshold
         self.skip_duration        = skip_duration
-        self.error_logging_enabled= error_logging_enabled
+        self.error_logging_enabled = error_logging_enabled
         self.exception_classes    = (additional_exception_classes | DEFAULT_EXCEPTION_CLASSES)
         self.logger               = logger
         self.monitor              = monitor
