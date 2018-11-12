@@ -17,7 +17,7 @@ module Shift
       attr_accessor :last_error_time, :state, :logger, :monitor
 
       DEFAULT_EXCEPTION_CLASSES = [Net::OpenTimeout, Net::ReadTimeout, Faraday::TimeoutError, Timeout::Error].freeze
-      DEFAULT_ERROR_LOGGING_STATE = true.freeze
+      DEFAULT_ERROR_LOGGING_STATE = true
 
       # Initializer creates an instance of the service
       #
