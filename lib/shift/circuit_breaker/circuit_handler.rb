@@ -109,7 +109,7 @@ module Shift
       end
 
       def log_errors(exception)
-        logger.error(circuit_name: name, state: state, error_message: exception.message) if error_logging_enabled
+        logger.error(circuit_name: name, state: state, exception: exception, error_message: exception.message, remote_logging_enabled: error_logging_enabled) 
       end
     end
   end
