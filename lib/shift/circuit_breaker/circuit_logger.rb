@@ -29,7 +29,8 @@ module Shift
       def error(context)
         message = (ERROR_MESSAGE % context)
         logger.error(message)
-        remote_logger.call(message) if remote_logger.respond_to?(:call)
+        ::NewRelic::Agent.notice_error(context[:exception], expected: true) if defined?(NewRelic)
+        remote_logger.call(message) if context[:remote_logging_enabled] && remote_logger.respond_to?(:call)
       end
     end
   end
