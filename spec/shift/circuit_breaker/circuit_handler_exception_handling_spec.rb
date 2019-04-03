@@ -165,7 +165,7 @@ module Shift
         end
 
         context "when it is disabled" do
-          it "should not log errors" do
+          it "should log errors to console" do
             # Arrange
             operation_stub  = instance_double("Operation")
             fallback_stub   = instance_double("Fallback")
@@ -181,7 +181,7 @@ module Shift
             aggregate_failures do
               expect(operation_result).to eq(fallback_stub)
               expect(cb.error_count).to eq(1)
-              expect(error_logger).not_to have_received(:error)
+              expect(error_logger).to have_received(:error)
             end
           end
         end
