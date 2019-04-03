@@ -23,7 +23,6 @@ module Shift
       def initialize(logger: ::Logger.new(STDOUT), remote_logger: Shift::CircuitBreaker::Adapters::SentryAdapter)
         self.logger = logger
         self.remote_logger = remote_logger
-        self.remote_logging_enabled = remote_logging_enabled
       end
 
       # @param [Object] context - contains :circuit_name, :state, :error_message
