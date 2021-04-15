@@ -29,23 +29,23 @@ module Shift
       # @param [Object]  logger            - service to handle error logging
       # @param [Object]  monitor           - service to monitor metric
       def initialize(name,
-                     error_threshold:,
-                     skip_duration:,
-                     additional_exception_classes: [],
-                     error_logging_enabled: DEFAULT_ERROR_LOGGING_STATE,
-                     logger: Shift::CircuitBreaker::CircuitLogger.new,
-                     monitor: Shift::CircuitBreaker::CircuitMonitor.new)
+        error_threshold:,
+        skip_duration:,
+        additional_exception_classes: [],
+        error_logging_enabled: DEFAULT_ERROR_LOGGING_STATE,
+        logger: Shift::CircuitBreaker::CircuitLogger.new,
+        monitor: Shift::CircuitBreaker::CircuitMonitor.new)
 
-        self.name                 = name
-        self.error_threshold      = error_threshold
-        self.skip_duration        = skip_duration
+        self.name = name
+        self.error_threshold = error_threshold
+        self.skip_duration = skip_duration
         self.error_logging_enabled = error_logging_enabled
-        self.exception_classes    = (additional_exception_classes | DEFAULT_EXCEPTION_CLASSES)
-        self.logger               = logger
-        self.monitor              = monitor
-        self.error_count          = 0
-        self.last_error_time      = nil
-        self.state                = :closed
+        self.exception_classes = (additional_exception_classes | DEFAULT_EXCEPTION_CLASSES)
+        self.logger = logger
+        self.monitor = monitor
+        self.error_count = 0
+        self.last_error_time = nil
+        self.state = :closed
       end
 
       # Performs the given operation within the circuit
@@ -64,10 +64,15 @@ module Shift
       private
 
       def set_state
-        # The curcuit is opened/tripped if the error_threshold is met or exceeded
+        # The circuit is opened/tripped if the error_threshold is met or exceeded
         # (error_count >= error_threshold) and the last_error_time is within
         # the skip_duration (see comments in #skip_duration_expired?).
-        self.state = (error_count >= error_threshold) && !skip_duration_expired? ? :open : :closed
+        self.state = \
+          if (error_count >= error_threshold) && !skip_duration_expired?
+            :open
+          else
+            :closed
+          end
       end
 
       def skip_duration_expired?

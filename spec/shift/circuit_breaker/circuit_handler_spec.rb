@@ -11,13 +11,13 @@ module Shift
 
       context "when given a valid operation" do
         let(:default_error_threshold) { 10 }
-        let(:default_skip_duration)   { 60 }
+        let(:default_skip_duration) { 60 }
 
         it "returns the expected result" do
           # Arrange
-          operation_stub        = instance_double("Operation")
-          fallback_stub         = instance_double("Fallback")
-          expected_result_stub  = instance_double("ExpectedResult")
+          operation_stub = instance_double("Operation")
+          fallback_stub = instance_double("Fallback")
+          expected_result_stub = instance_double("ExpectedResult")
 
           allow(operation_stub).to receive(:perform_task).and_return(expected_result_stub)
 
@@ -32,21 +32,21 @@ module Shift
 
       context "when given additional exception classes" do
         let(:default_error_threshold) { 10 }
-        let(:default_skip_duration)   { 60 }
+        let(:default_skip_duration) { 60 }
 
         it "rescues the exception and returns the fallback" do
           # Arrange
-          operation_stub                = instance_double("Operation")
-          fallback_stub                 = instance_double("Fallback")
-          additional_exception_classes  = [Faraday::ClientError]
+          operation_stub = instance_double("Operation")
+          fallback_stub = instance_double("Fallback")
+          additional_exception_classes = [Faraday::ClientError]
 
           allow(operation_stub).to receive(:perform_task).and_raise(Faraday::ClientError, "client error")
 
           # Act
           cb = described_class.new(:test_circuit_breaker,
-                                   error_threshold: default_error_threshold,
-                                   skip_duration: default_skip_duration,
-                                   additional_exception_classes: additional_exception_classes)
+            error_threshold: default_error_threshold,
+            skip_duration: default_skip_duration,
+            additional_exception_classes: additional_exception_classes)
 
           operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
 
@@ -58,7 +58,7 @@ module Shift
       context "Invalid Arguments" do
         context "when initialising service" do
           let(:default_error_threshold) { 10 }
-          let(:default_skip_duration)   { 60 }
+          let(:default_skip_duration) { 60 }
 
           context "when no error_threshold is provided" do
             it "raises an ArgumentError" do
@@ -77,7 +77,7 @@ module Shift
 
         context "Invalid #call arguments" do
           let(:default_error_threshold) { 10 }
-          let(:default_skip_duration)   { 60 }
+          let(:default_skip_duration) { 60 }
 
           context "when no operation is given" do
             it "raises an ArgumentError" do
@@ -134,8 +134,8 @@ module Shift
           context "when given an operation that does not implement #call" do
             it "raises an ArgumentError" do
               # Arrange
-              operation_stub  = instance_double("Operation")
-              fallback_stub   = instance_double("Fallback")
+              operation_stub = instance_double("Operation")
+              fallback_stub = instance_double("Fallback")
 
               # Act
               cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
@@ -148,8 +148,8 @@ module Shift
           context "when given a fallback that does not implement #call" do
             it "raises an ArgumentError" do
               # Arrange
-              operation_stub  = instance_double("Operation")
-              fallback_stub   = instance_double("Fallback")
+              operation_stub = instance_double("Operation")
+              fallback_stub = instance_double("Fallback")
 
               # Act
               cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)

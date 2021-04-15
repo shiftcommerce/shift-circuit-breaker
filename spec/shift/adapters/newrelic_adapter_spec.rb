@@ -4,7 +4,8 @@ require "spec_helper"
 
 module NewRelic
   module Agent
-    def self.increment_metric(*); end
+    def self.increment_metric(*)
+    end
   end
 end
 

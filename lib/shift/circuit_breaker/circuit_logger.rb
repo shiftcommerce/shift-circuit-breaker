@@ -14,13 +14,13 @@ module Shift
         STATE: %<state>s
         MESSAGE: %<error_message>s
         ====================================================================================
-        EOF
+      EOF
 
       # Initializer creates an instance of the service
       #
       # @param [Object]  logger  - service to handle internal logging
       # @param [Object]  remote_logger - external error logging service eg. Sentry
-      def initialize(logger: ::Logger.new(STDOUT), remote_logger: Shift::CircuitBreaker::Adapters::SentryAdapter)
+      def initialize(logger: ::Logger.new($stdout), remote_logger: Shift::CircuitBreaker::Adapters::SentryAdapter)
         self.logger = logger
         self.remote_logger = remote_logger
       end

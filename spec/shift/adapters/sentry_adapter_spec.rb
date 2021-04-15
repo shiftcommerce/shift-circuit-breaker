@@ -3,7 +3,8 @@
 require "spec_helper"
 
 module Sentry
-  def self.capture_exception(*); end
+  def self.capture_exception(*)
+  end
 end
 
 module Shift
