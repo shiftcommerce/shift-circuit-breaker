@@ -12,11 +12,11 @@ module Shift
       context "#record_metric" do
         it "logs the metric information" do
           # Arrange
-          circuit_breaker_name  = :test_circuit_breaker
+          circuit_breaker_name = :test_circuit_breaker
           circuit_breaker_state = :open
-          metric                = "Custom/#{circuit_breaker_name.to_s.classify}CircuitBreaker/#{circuit_breaker_state.to_s.classify}"
-          logger_instance       = ::Logger.new(STDOUT)
-          circuit_monitor       = described_class.new(logger: logger_instance)
+          metric = "Custom/#{circuit_breaker_name.to_s.classify}CircuitBreaker/#{circuit_breaker_state.to_s.classify}"
+          logger_instance = ::Logger.new($stdout)
+          circuit_monitor = described_class.new(logger: logger_instance)
 
           allow(logger_instance).to receive(:info)
 
@@ -29,11 +29,11 @@ module Shift
 
         it "logs the metric information using the provided monitor" do
           # Arrange
-          circuit_breaker_name  = :test_circuit_breaker
+          circuit_breaker_name = :test_circuit_breaker
           circuit_breaker_state = :open
-          metric                = "Custom/#{circuit_breaker_name.to_s.classify}CircuitBreaker/#{circuit_breaker_state.to_s.classify}"
-          metric_monitor        = Shift::CircuitBreaker::Adapters::NewRelicAdapter
-          circuit_monitor       = described_class.new(monitor: metric_monitor)
+          metric = "Custom/#{circuit_breaker_name.to_s.classify}CircuitBreaker/#{circuit_breaker_state.to_s.classify}"
+          metric_monitor = Shift::CircuitBreaker::Adapters::NewRelicAdapter
+          circuit_monitor = described_class.new(monitor: metric_monitor)
 
           allow(metric_monitor).to receive(:call)
 

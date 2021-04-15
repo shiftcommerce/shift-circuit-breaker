@@ -11,13 +11,13 @@ module Shift
 
       context "Exception Handling" do
         let(:default_error_threshold) { 10 }
-        let(:default_skip_duration)   { 60 }
+        let(:default_skip_duration) { 60 }
 
         context "when a timeout exception is raised" do
           it "returns the fallback" do
             # Arrange
-            operation_stub  = instance_double("Operation")
-            fallback_stub   = instance_double("Fallback")
+            operation_stub = instance_double("Operation")
+            fallback_stub = instance_double("Fallback")
 
             allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
 
@@ -36,7 +36,7 @@ module Shift
             operation_1_stub = instance_double("Operation1")
             operation_2_stub = instance_double("Operation2")
             operation_3_stub = instance_double("Operation3")
-            fallback_stub    = instance_double("Fallback")
+            fallback_stub = instance_double("Fallback")
 
             allow(operation_1_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
             allow(operation_2_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
@@ -86,11 +86,11 @@ module Shift
 
           it "closes the circuit and returns the operation result" do
             # Arrange
-            operation_1_stub      = instance_double("Operation1")
-            operation_2_stub      = instance_double("Operation2")
-            operation_3_stub      = instance_double("Operation3")
-            fallback_stub         = instance_double("Fallback")
-            expected_result_stub  = instance_double("ExpectedResult")
+            operation_1_stub = instance_double("Operation1")
+            operation_2_stub = instance_double("Operation2")
+            operation_3_stub = instance_double("Operation3")
+            fallback_stub = instance_double("Fallback")
+            expected_result_stub = instance_double("ExpectedResult")
 
             allow(operation_1_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
             allow(operation_2_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
@@ -140,14 +140,14 @@ module Shift
 
       context "Error Logging" do
         let(:default_error_threshold) { 5 }
-        let(:default_skip_duration)   { 6 }
+        let(:default_skip_duration) { 6 }
 
         context "when it is enabled" do
           it "should log errors" do
             # Arrange
-            operation_stub  = instance_double("Operation")
-            fallback_stub   = instance_double("Fallback")
-            error_logger    = instance_double("Error")
+            operation_stub = instance_double("Operation")
+            fallback_stub = instance_double("Fallback")
+            error_logger = instance_double("Error")
 
             allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
             allow(error_logger).to receive(:error).and_return({})
@@ -167,9 +167,9 @@ module Shift
         context "when it is disabled" do
           it "should log errors to console" do
             # Arrange
-            operation_stub  = instance_double("Operation")
-            fallback_stub   = instance_double("Fallback")
-            error_logger    = instance_double("Error")
+            operation_stub = instance_double("Operation")
+            fallback_stub = instance_double("Fallback")
+            error_logger = instance_double("Error")
 
             allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
             allow(error_logger).to receive(:error).and_return({})

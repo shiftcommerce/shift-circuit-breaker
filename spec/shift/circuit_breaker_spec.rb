@@ -12,16 +12,16 @@ module Shift
       it "correctly assigns the configuration keys" do
         # Arrange
         dummy_new_relic_license_key = SecureRandom.hex(10)
-        dummy_new_relic_app_name    = "Test App"
-        dummy_sentry_dsn            = SecureRandom.hex(10)
-        dummy_sentry_environments   = %w[production]
+        dummy_new_relic_app_name = "Test App"
+        dummy_sentry_dsn = SecureRandom.hex(10)
+        dummy_sentry_environments = %w[production]
 
         # Act
         Shift::CircuitBreaker.configure do |config|
-          config.new_relic_license_key  = dummy_new_relic_license_key
-          config.new_relic_app_name     = dummy_new_relic_app_name
-          config.sentry_dsn             = dummy_sentry_dsn
-          config.sentry_environments    = dummy_sentry_environments
+          config.new_relic_license_key = dummy_new_relic_license_key
+          config.new_relic_app_name = dummy_new_relic_app_name
+          config.sentry_dsn = dummy_sentry_dsn
+          config.sentry_environments = dummy_sentry_environments
         end
 
         config = Shift::CircuitBreaker.config
@@ -39,20 +39,20 @@ module Shift
     context "Instantiation" do
       it "creates an instance of the circuit breaker" do
         # Arrange
-        cb_name                       = :test_circuit
-        error_threshold               = 10
-        skip_duration                 = 60
-        additional_exception_classes  = [Faraday::ClientError]
-        logger_stub                   = instance_double("CustomLogger")
-        monitor_stub                  = instance_double("CustomMonitor")
+        cb_name = :test_circuit
+        error_threshold = 10
+        skip_duration = 60
+        additional_exception_classes = [Faraday::ClientError]
+        logger_stub = instance_double("CustomLogger")
+        monitor_stub = instance_double("CustomMonitor")
 
         # Act
         cb_instance = Shift::CircuitBreaker.new(cb_name,
-                                                error_threshold: error_threshold,
-                                                skip_duration: skip_duration,
-                                                additional_exception_classes: additional_exception_classes,
-                                                logger: logger_stub,
-                                                monitor: monitor_stub)
+          error_threshold: error_threshold,
+          skip_duration: skip_duration,
+          additional_exception_classes: additional_exception_classes,
+          logger: logger_stub,
+          monitor: monitor_stub)
 
         # Assert
         aggregate_failures do

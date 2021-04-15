@@ -14,5 +14,8 @@ jobs:
           command: bundle -v
       - ruby/bundle-install
       - run:
+          name: Lint
+          command: bundle exec standardrb
+      - run:
           name: Test suite
           command: bundle exec rspec
