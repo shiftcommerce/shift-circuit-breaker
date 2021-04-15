@@ -2,9 +2,10 @@ name: Ruby Gem
 
 on:
   push:
-    branches: [ main ]
-  paths:
-    - "lib/shift/circuit_breaker/version.rb"
+    branches:
+      - main
+    paths:
+      - "lib/shift/circuit_breaker/version.rb"
 
 jobs:
   build:
