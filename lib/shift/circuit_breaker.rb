@@ -27,6 +27,7 @@ module Shift
   #   CIRCUIT_BREAKER = Shift::CircuitBreaker.new(:an_identifier_for_the_circuit,
   #                                               error_threshold: 10,
   #                                               skip_duration: 60,
+  #                                               log_errors: true,
   #                                               additional_exception_classes: [Faraday::ClientError]
   #                                             )
   #

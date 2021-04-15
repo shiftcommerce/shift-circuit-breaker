@@ -2,6 +2,12 @@
 
 require "spec_helper"
 
+module NewRelic
+  module Agent
+    def self.notice_error(*); end
+  end
+end
+
 module Shift
   module CircuitBreaker
     describe CircuitLogger do
@@ -28,12 +34,13 @@ module Shift
 
         it "logs the given error message using the provided remote_logger" do
           # Arrange
-          context       = { circuit_name: :test_circuit_breaker, error_message: "timeout", state: :open }
+          context       = { circuit_name: :test_circuit_breaker, error_message: "timeout", state: :open, remote_logging_enabled: true }
           error_message = (described_class::ERROR_MESSAGE % context)
           remote_logger = Shift::CircuitBreaker::Adapters::SentryAdapter
           logger        = described_class.new(remote_logger: remote_logger)
 
           allow(remote_logger).to receive(:call)
+          allow(::NewRelic::Agent).to receive(:notice_error)
 
           # Act
           logger.error(context)
@@ -42,6 +49,26 @@ module Shift
           aggregate_failures do
             expect(logger.remote_logger).to eq(remote_logger)
             expect(remote_logger).to have_received(:call).with(include(error_message))
+          end
+        end
+
+        it "should not log error to remote_error if remote_logging_enabled is set to false" do
+          # Arrange
+          context       = { circuit_name: :test_circuit_breaker, error_message: "timeout", state: :open, remote_logging_enabled: false }
+          error_message = (described_class::ERROR_MESSAGE % context)
+          remote_logger = Shift::CircuitBreaker::Adapters::SentryAdapter
+          logger        = described_class.new(remote_logger: remote_logger)
+
+          allow(remote_logger).to receive(:call)
+          allow(::NewRelic::Agent).to receive(:notice_error)
+
+          # Act
+          logger.error(context)
+
+          # Assert
+          aggregate_failures do
+            expect(logger.remote_logger).to eq(remote_logger)
+            expect(remote_logger).not_to have_received(:call).with(include(error_message))
           end
         end
       end
