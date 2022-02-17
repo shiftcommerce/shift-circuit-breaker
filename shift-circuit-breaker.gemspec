@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "activesupport"
   s.add_development_dependency "newrelic_rpm", "~> 5.3", ">= 5.3.0.346"
-  s.add_development_dependency "sentry-raven", "~> 2.7", ">= 2.7.2"
+  s.add_development_dependency "sentry-ruby", "~> 5.1"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "pry", "~> 0.11.3"

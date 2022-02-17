@@ -6,7 +6,7 @@ require "active_support/core_ext/string/inflections"
 require "faraday"
 require "logger"
 require "net/protocol"
-require "sentry-raven"
+require "sentry-ruby"
 require "singleton"
 require "timeout"
 

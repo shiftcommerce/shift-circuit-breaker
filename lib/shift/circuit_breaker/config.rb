@@ -31,7 +31,7 @@ module Shift
 
       def initialize_sentry
         if sentry_dsn
-          Raven.configure do |config|
+          Sentry.init do |config|
             config.dsn = sentry_dsn
             config.environments = sentry_environments if sentry_environments.present?
           end
