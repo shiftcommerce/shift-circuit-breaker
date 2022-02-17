@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/shiftcommerce/shift-circuit-breaker"
   s.authors = ["Mufudzi Masaire"]
   s.email = "mufudzi.masaire@shiftcommerce.com"
-  s.date = Time.now.strftime("%Y-%m-%d")
   s.license = "MIT"
 
   s.required_ruby_version = ">= 2.3.0"
