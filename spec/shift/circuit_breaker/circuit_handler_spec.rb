@@ -22,7 +22,7 @@ module Shift
           allow(operation_stub).to receive(:perform_task).and_return(expected_result_stub)
 
           # Act
-          cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
+          cb = described_class.new(name: :test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
           operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
 
           # Assert
@@ -43,7 +43,7 @@ module Shift
           allow(operation_stub).to receive(:perform_task).and_raise(Faraday::ClientError, "client error")
 
           # Act
-          cb = described_class.new(:test_circuit_breaker,
+          cb = described_class.new(name: :test_circuit_breaker,
             error_threshold: default_error_threshold,
             skip_duration: default_skip_duration,
             additional_exception_classes: additional_exception_classes)
@@ -63,14 +63,14 @@ module Shift
           context "when no error_threshold is provided" do
             it "raises an ArgumentError" do
               # Act & Assert
-              expect { described_class.new(:test_circuit_breaker, skip_duration: default_skip_duration) }.to raise_error(ArgumentError)
+              expect { described_class.new(name: :test_circuit_breaker, skip_duration: default_skip_duration) }.to raise_error(ArgumentError)
             end
           end
 
           context "when no skip_duration is provided" do
             it "raises an ArgumentError" do
               # Act & Assert
-              expect { described_class.new(:test_circuit_breaker, error_threshold: default_skip_duration) }.to raise_error(ArgumentError)
+              expect { described_class.new(name: :test_circuit_breaker, error_threshold: default_skip_duration) }.to raise_error(ArgumentError)
             end
           end
         end
@@ -85,7 +85,7 @@ module Shift
               fallback_stub = instance_double("Fallback")
 
               # Act
-              cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
+              cb = described_class.new(name: :test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
 
               # Assert
               expect { cb.call(fallback: -> { fallback_stub }) }.to raise_error(ArgumentError)
@@ -98,7 +98,7 @@ module Shift
               operation_stub = instance_double("Operation")
 
               # Act
-              cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
+              cb = described_class.new(name: :test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
 
               # Act & Assert
               expect { cb.call(operation: -> { operation_stub }) }.to raise_error(ArgumentError)
@@ -111,7 +111,7 @@ module Shift
               fallback_stub = instance_double("Fallback")
 
               # Act
-              cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
+              cb = described_class.new(name: :test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
 
               # Assert
               expect { cb.call(operation: nil, fallback: -> { fallback_stub }) }.to raise_error(ArgumentError)
@@ -124,7 +124,7 @@ module Shift
               operation_stub = instance_double("Operation")
 
               # Act
-              cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
+              cb = described_class.new(name: :test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
 
               # Assert
               expect { cb.call(operation: -> { operation_stub }, fallback: nil) }.to raise_error(ArgumentError)
@@ -138,7 +138,7 @@ module Shift
               fallback_stub = instance_double("Fallback")
 
               # Act
-              cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
+              cb = described_class.new(name: :test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
 
               # Assert
               expect { cb.call(operation: operation_stub, fallback: -> { fallback_stub }) }.to raise_error(ArgumentError)
@@ -152,7 +152,7 @@ module Shift
               fallback_stub = instance_double("Fallback")
 
               # Act
-              cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
+              cb = described_class.new(name: :test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
 
               # Assert
               expect { cb.call(operation: -> { operation_stub }, fallback: fallback_stub) }.to raise_error(ArgumentError)

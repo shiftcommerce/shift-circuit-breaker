@@ -33,7 +33,7 @@ module Shift
         if sentry_dsn
           Sentry.init do |config|
             config.dsn = sentry_dsn
-            config.environments = sentry_environments if sentry_environments.present?
+            config.enabled_environments = sentry_environments if sentry_environments.present?
           end
         end
       end

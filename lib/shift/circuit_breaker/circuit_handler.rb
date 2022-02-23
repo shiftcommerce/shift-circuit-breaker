@@ -28,7 +28,7 @@ module Shift
       # @param [Boolean] error_logging_enabled         - Decided whether to log errors or not. Still they will be monitored
       # @param [Object]  logger            - service to handle error logging
       # @param [Object]  monitor           - service to monitor metric
-      def initialize(name,
+      def initialize(name:,
         error_threshold:,
         skip_duration:,
         additional_exception_classes: [],

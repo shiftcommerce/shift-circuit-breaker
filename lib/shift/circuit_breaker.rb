@@ -24,7 +24,7 @@ module Shift
   # ==== Example Usage:
   #
   # class MyClass
-  #   CIRCUIT_BREAKER = Shift::CircuitBreaker.new(:an_identifier_for_the_circuit,
+  #   CIRCUIT_BREAKER = Shift::CircuitBreaker.new(name: :an_identifier_for_the_circuit,
   #                                               error_threshold: 10,
   #                                               skip_duration: 60,
   #                                               log_errors: true,
@@ -39,8 +39,8 @@ module Shift
   #
   module CircuitBreaker
     class << self
-      def new(*args)
-        Shift::CircuitBreaker::CircuitHandler.new(*args)
+      def new(**args)
+        Shift::CircuitBreaker::CircuitHandler.new(**args)
       end
 
       def config

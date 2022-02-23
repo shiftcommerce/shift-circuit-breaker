@@ -25,7 +25,7 @@ module Shift
             allow(operation_stub).to receive(:perform_task).and_return(expected_result_stub)
 
             # Act
-            cb = described_class.new(:test_circuit_breaker,
+            cb = described_class.new(name: :test_circuit_breaker,
               error_threshold: default_skip_duration,
               skip_duration: default_skip_duration,
               monitor: monitor_stub)
@@ -53,7 +53,7 @@ module Shift
             allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
 
             # Act
-            cb = described_class.new(:test_circuit_breaker, error_threshold: 1, skip_duration: default_skip_duration, monitor: monitor_stub)
+            cb = described_class.new(name: :test_circuit_breaker, error_threshold: 1, skip_duration: default_skip_duration, monitor: monitor_stub)
 
             # Assert
             aggregate_failures do

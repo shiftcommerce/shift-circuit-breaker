@@ -34,7 +34,7 @@ Example usage is as follows -
 
 ```ruby
   class MyClass
-    CIRCUIT_BREAKER = Shift::CircuitBreaker.new(:some_identifier, 
+    CIRCUIT_BREAKER = Shift::CircuitBreaker.new(name: :some_identifier, 
                                                 error_threshold: 10, 
                                                 skip_duration: 60, 
                                                 additional_exception_classes: [ 
@@ -68,7 +68,7 @@ With regards to monitoring and logging, integration with New Relic and Sentry is
 ***Note:*** both integrations can be overriden when instantiating the `Shift::CircuitMonitor` and `Shift::CircuitLogger` services, eg.
 
 ```ruby
-  CIRCUIT_BREAKER = Shift::CircuitBreaker.new(:some_identifier, 
+  CIRCUIT_BREAKER = Shift::CircuitBreaker.new(name: :some_identifier, 
                                               error_threshold: 10, 
                                               skip_duration: 60, 
                                               logger: Shift::CircuitBreaker::CircuitLogger.new(remote_logger: CUSTOM_LOGGER),
