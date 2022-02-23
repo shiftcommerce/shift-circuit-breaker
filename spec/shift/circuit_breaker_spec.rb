@@ -47,7 +47,7 @@ module Shift
         monitor_stub = instance_double("CustomMonitor")
 
         # Act
-        cb_instance = Shift::CircuitBreaker.new(cb_name,
+        cb_instance = Shift::CircuitBreaker.new(name: cb_name,
           error_threshold: error_threshold,
           skip_duration: skip_duration,
           additional_exception_classes: additional_exception_classes,

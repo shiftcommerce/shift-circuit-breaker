@@ -28,13 +28,13 @@ module Shift
             # Arrange
             message = "some exception"
 
-            allow(::Raven).to receive(:capture_exception)
+            allow(::Sentry).to receive(:capture_exception)
 
             # Act
             described_class.call(message)
 
             # Assert
-            expect(::Raven).to have_received(:capture_exception).with(message).once
+            expect(::Sentry).to have_received(:capture_exception).with(message).once
           end
         end
       end

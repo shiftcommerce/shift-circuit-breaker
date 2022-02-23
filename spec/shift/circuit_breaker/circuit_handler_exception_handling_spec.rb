@@ -22,7 +22,7 @@ module Shift
             allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
 
             # Act
-            cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
+            cb = described_class.new(name: :test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration)
             operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
 
             # Assert
@@ -43,7 +43,7 @@ module Shift
             allow(operation_3_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
 
             # Act & Assert
-            cb = described_class.new(:test_circuit_breaker, error_threshold: 2, skip_duration: default_skip_duration)
+            cb = described_class.new(name: :test_circuit_breaker, error_threshold: 2, skip_duration: default_skip_duration)
 
             # The first operation will fail with Timeout::Error, resulting in the exception being caught and
             # the fallback being returned as the operation result. The error_count is incremented to 1.
@@ -97,7 +97,7 @@ module Shift
             allow(operation_3_stub).to receive(:perform_task).and_return(expected_result_stub)
 
             # Act & Assert
-            cb = described_class.new(:test_circuit_breaker, error_threshold: 2, skip_duration: 10)
+            cb = described_class.new(name: :test_circuit_breaker, error_threshold: 2, skip_duration: 10)
 
             # The first operation will fail with Timeout::Error, resulting in the exception being caught and
             # the fallback being returned as the operation result. The error_count is incremented to 1.
@@ -152,7 +152,7 @@ module Shift
             allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
             allow(error_logger).to receive(:error).and_return({})
             # Act
-            cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration, logger: error_logger)
+            cb = described_class.new(name: :test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration, logger: error_logger)
             operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
 
             # Assert
@@ -174,7 +174,7 @@ module Shift
             allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
             allow(error_logger).to receive(:error).and_return({})
             # Act
-            cb = described_class.new(:test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration, error_logging_enabled: false, logger: error_logger)
+            cb = described_class.new(name: :test_circuit_breaker, error_threshold: default_error_threshold, skip_duration: default_skip_duration, error_logging_enabled: false, logger: error_logger)
             operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
 
             # Assert
