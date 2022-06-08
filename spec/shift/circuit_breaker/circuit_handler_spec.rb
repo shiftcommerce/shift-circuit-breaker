@@ -71,7 +71,7 @@ module Shift
             error_threshold: default_error_threshold,
             skip_duration: default_skip_duration,
             additional_exception_classes: additional_exception_classes,
-            monitor: monitor,
+            monitor: monitor
           )
 
           operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
