@@ -22,10 +22,21 @@ module Shift
         logger.info("* #{metric} *")
       end
 
+      # @param [String] name - The circuit name
+      def record_exception(name)
+        metric = formatted_metric(name)
+        monitor.call(metric) if monitor.respond_to?(:call)
+        logger.info("* #{metric} *")
+      end
+
       private
 
-      def formatted_metric(name, state)
-        "Custom/#{name.to_s.classify}CircuitBreaker/#{state.to_s.classify}"
+      def formatted_metric(name, state = nil)
+        if state
+          "Custom/#{name.to_s.classify}CircuitBreaker/#{state.to_s.classify}"
+        else
+          "Custom/#{name.to_s.classify}CircuitBreaker/errors"
+        end
       end
     end
   end
