@@ -23,10 +23,8 @@ module Shift
       end
 
       # @param [String] name - The circuit name
-      def record_exception(name)
-        metric = formatted_metric(name)
-        monitor.call(metric) if monitor.respond_to?(:call)
-        logger.info("* #{metric} *")
+      def record_exception(name, state)
+        record_metric(name, state)
       end
 
       private
@@ -34,8 +32,6 @@ module Shift
       def formatted_metric(name, state = nil)
         if state
           "Custom/#{name.to_s.classify}CircuitBreaker/#{state.to_s.classify}"
-        else
-          "Custom/#{name.to_s.classify}CircuitBreaker/errors"
         end
       end
     end

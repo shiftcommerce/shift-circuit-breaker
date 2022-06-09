@@ -63,7 +63,6 @@ module Shift
 
           allow(operation_stub).to receive(:perform_task).and_raise(Faraday::ClientError, "client error")
           allow(monitor).to receive(:record_exception)
-          allow(monitor).to receive(:record_metric)
 
           # Act
           cb = described_class.new(

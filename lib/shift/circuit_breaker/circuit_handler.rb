@@ -110,9 +110,7 @@ module Shift
         set_state
         log_errors(exception)
         # Increments exceptions; useful for alerting
-        monitor.record_exception(name)
-        # Increments total calls with current state e.g. open/closed
-        monitor.record_metric(name, state)
+        monitor.record_exception(name, "errored")
         fallback.call
       end
 

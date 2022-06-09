@@ -52,13 +52,13 @@ module Shift
         it "logs the metric information for an exception" do
           # Arrange
           circuit_breaker_name = :test_circuit_breaker
-          metric = "Custom/#{circuit_breaker_name.to_s.classify}CircuitBreaker/errors"
+          metric = "Custom/#{circuit_breaker_name.to_s.classify}CircuitBreaker/Error"
           metric_monitor = Shift::CircuitBreaker::Adapters::NewRelicAdapter
           circuit_monitor = described_class.new(monitor: metric_monitor)
           allow(metric_monitor).to receive(:call)
 
           # Act
-          circuit_monitor.record_exception(circuit_breaker_name)
+          circuit_monitor.record_exception(circuit_breaker_name, "errors")
 
           # Assert
           expect(metric_monitor).to have_received(:call).with(metric)
