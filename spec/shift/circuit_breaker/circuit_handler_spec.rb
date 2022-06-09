@@ -53,6 +53,34 @@ module Shift
           # Assert
           expect(operation_result).to eq(fallback_stub)
         end
+
+        it "instruments the exception and returns the fallback" do
+          # Arrange
+          operation_stub = instance_double("Operation")
+          fallback_stub = instance_double("Fallback")
+          monitor = instance_double("monitoring")
+          additional_exception_classes = [Faraday::ClientError]
+
+          allow(operation_stub).to receive(:perform_task).and_raise(Faraday::ClientError, "client error")
+          allow(monitor).to receive(:record_exception)
+
+          # Act
+          cb = described_class.new(
+            name: :test_circuit_breaker,
+            error_threshold: default_error_threshold,
+            skip_duration: default_skip_duration,
+            additional_exception_classes: additional_exception_classes,
+            monitor: monitor
+          )
+
+          operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
+
+          # Assert
+          aggregate_failures do
+            expect(monitor).to have_received(:record_exception)
+            expect(operation_result).to eq(fallback_stub)
+          end
+        end
       end
 
       context "Invalid Arguments" do

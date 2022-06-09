@@ -49,7 +49,7 @@ module Shift
             operation_stub = instance_double("Operation")
             fallback_stub = instance_double("Fallback")
 
-            allow(monitor_stub).to receive(:record_metric)
+            allow(monitor_stub).to receive(:record_exception)
             allow(operation_stub).to receive(:perform_task).and_raise(Timeout::Error, "Request Timeout")
 
             # Act
@@ -61,7 +61,7 @@ module Shift
 
               operation_result = cb.call(operation: -> { operation_stub.perform_task }, fallback: -> { fallback_stub })
 
-              expect(monitor_stub).to have_received(:record_metric)
+              expect(monitor_stub).to have_received(:record_exception)
               expect(operation_result).to eq(fallback_stub)
             end
           end

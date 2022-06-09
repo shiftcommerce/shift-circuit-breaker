@@ -109,7 +109,8 @@ module Shift
         record_error
         set_state
         log_errors(exception)
-        monitor.record_metric(name, state)
+        # Increments exceptions; useful for alerting
+        monitor.record_exception(name, "errored")
         fallback.call
       end
 

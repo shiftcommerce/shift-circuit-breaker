@@ -22,6 +22,12 @@ module Shift
         logger.info("* #{metric} *")
       end
 
+      # @param [String] name - The circuit name
+      # @param [String] state - error
+      def record_exception(name, state)
+        record_metric(name, state)
+      end
+
       private
 
       def formatted_metric(name, state)
