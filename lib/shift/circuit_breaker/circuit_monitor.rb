@@ -29,10 +29,8 @@ module Shift
 
       private
 
-      def formatted_metric(name, state = nil)
-        if state
-          "Custom/#{name.to_s.classify}CircuitBreaker/#{state.to_s.classify}"
-        end
+      def formatted_metric(name, state)
+        "Custom/#{name.to_s.classify}CircuitBreaker/#{state.to_s.classify}"
       end
     end
   end
